@@ -1,0 +1,177 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --color-grove: var(--grove);
+  --color-grove-light: var(--grove-light);
+  --color-grove-deep: var(--grove-deep);
+  --color-grove-foreground: var(--grove-foreground);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* Guardian's Grove — light mode (the focus register) */
+  --background: oklch(0.995 0.002 150);
+  --foreground: oklch(0.21 0.02 155);
+  --card: oklch(1 0.004 150);
+  --card-foreground: oklch(0.21 0.02 155);
+  --popover: oklch(1 0.004 150);
+  --popover-foreground: oklch(0.21 0.02 155);
+
+  /* Guardian Green — the committed brand green (30-60% of surfaces) */
+  --primary: oklch(0.46 0.13 152);
+  --primary-foreground: oklch(0.985 0.005 150);
+
+  /* Academy Gold — the crown. Used once per view (hero CTA / achievement). */
+  --secondary: oklch(0.84 0.16 92);
+  --secondary-foreground: oklch(0.25 0.04 152);
+
+  --muted: oklch(0.95 0.008 152);
+  --muted-foreground: oklch(0.44 0.02 155);
+  --accent: oklch(0.93 0.02 152);
+  --accent-foreground: oklch(0.25 0.04 152);
+  --destructive: oklch(0.577 0.22 27);
+  --border: oklch(0.89 0.008 152);
+  --input: oklch(0.89 0.008 152);
+  --ring: oklch(0.46 0.13 152 / 0.5);
+  --chart-1: oklch(0.46 0.13 152);
+  --chart-2: oklch(0.84 0.16 92);
+  --chart-3: oklch(0.6 0.1 152);
+  --chart-4: oklch(0.7 0.06 152);
+  --chart-5: oklch(0.35 0.08 152);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.98 0.005 150);
+  --sidebar-foreground: oklch(0.21 0.02 155);
+  --sidebar-primary: oklch(0.46 0.13 152);
+  --sidebar-primary-foreground: oklch(0.985 0.005 150);
+  --sidebar-accent: oklch(0.93 0.02 152);
+  --sidebar-accent-foreground: oklch(0.25 0.04 152);
+  --sidebar-border: oklch(0.89 0.008 152);
+  --sidebar-ring: oklch(0.46 0.13 152 / 0.5);
+
+  /* The Grove — the deep hero surface green + its tonal wash, and the
+     text color that sits on it (near-white). Not swapped by dark mode:
+     the hero always lives in the grove, day or night. */
+  --grove: oklch(0.42 0.12 152);
+  --grove-light: oklch(0.52 0.1 152);
+  --grove-deep: oklch(0.33 0.09 152);
+  --grove-foreground: oklch(0.99 0.003 150);
+
+  /* Choreographed-motion easings (DESIGN.md motion philosophy) */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Affiliation trust-bar: a slow, continuous drift of accreditation marks.
+   The track holds two identical copies; translating by -50% lands copy two
+   exactly where copy one began, so the loop is seamless. Kept slow and
+   edge-masked so it reads as a modern trust-bar, not a clip-art marquee. */
+@keyframes affiliation-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.dark {
+  /* Guardian's Grove — dark mode: a true shade of black, green-tinted only
+     at the edges. The Grove panel stays deep green as a lit object against
+     this near-black surface. */
+  --background: oklch(0.16 0.006 155);
+  --foreground: oklch(0.96 0.006 150);
+  --card: oklch(0.2 0.008 155);
+  --card-foreground: oklch(0.96 0.006 150);
+  --popover: oklch(0.2 0.008 155);
+  --popover-foreground: oklch(0.96 0.006 150);
+  --primary: oklch(0.62 0.13 152);
+  --primary-foreground: oklch(0.15 0.02 155);
+  --secondary: oklch(0.84 0.16 92);
+  --secondary-foreground: oklch(0.25 0.04 152);
+  --muted: oklch(0.24 0.01 155);
+  --muted-foreground: oklch(0.73 0.015 152);
+  --accent: oklch(0.27 0.012 155);
+  --accent-foreground: oklch(0.96 0.006 150);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.62 0.13 152 / 0.5);
+  --chart-1: oklch(0.62 0.13 152);
+  --chart-2: oklch(0.84 0.16 92);
+  --chart-3: oklch(0.5 0.1 152);
+  --chart-4: oklch(0.4 0.06 152);
+  --chart-5: oklch(0.3 0.08 152);
+  --sidebar: oklch(0.18 0.007 155);
+  --sidebar-foreground: oklch(0.96 0.006 150);
+  --sidebar-primary: oklch(0.62 0.13 152);
+  --sidebar-primary-foreground: oklch(0.15 0.02 155);
+  --sidebar-accent: oklch(0.27 0.012 155);
+  --sidebar-accent-foreground: oklch(0.96 0.006 150);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.62 0.13 152 / 0.5);
+
+  --grove: oklch(0.3 0.1 152);
+  --grove-light: oklch(0.4 0.09 152);
+  --grove-deep: oklch(0.22 0.05 152);
+  --grove-foreground: oklch(0.99 0.003 150);
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
