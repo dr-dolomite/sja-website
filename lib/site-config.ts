@@ -56,7 +56,7 @@ export const siteConfig = {
     {
       key: "facebook",
       label: "Facebook",
-      href: "https://www.facebook.com/", // TODO: real page URL
+      href: "https://www.facebook.com/SJAOfficialPage",
     },
   ] satisfies SocialLink[],
 } as const;
