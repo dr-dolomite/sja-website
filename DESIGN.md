@@ -38,7 +38,7 @@ Colors are **canonical by hex**. The values below are the single source of truth
 |---|---|---|
 | Evergreen | `#0E3D2B` | Deepest green. Full structural sections (the admissions band, the footer), the nav logo mark, and serif display headlines on light ground. The "committed green" mass. |
 | Palm | `#1E7A55` | Mid green. Interactive: links, the primary pill CTA, italic serif emphasis words, small accents and dots, all on light grounds only. This is `--primary`. |
-| Piña Gold | `#C9A24B` | Gold. Fine detail only: eyebrow labels, serif step numbers (01/02/03), bullet dots, thin ring/underline linework, and exactly one gold pill CTA when it sits on an evergreen ground. Never fills large areas, never gradients, never large text unless contrast-verified. |
+| Piña Gold | `#DDAF3C` | Gold. Fine detail only: eyebrow labels, serif step numbers (01/02/03), bullet dots, thin ring/underline linework, and exactly one gold pill CTA when it sits on an evergreen ground. Never fills large areas, never gradients, never large text unless contrast-verified. |
 | Leaf Tint | `#EDF3ED` | Pale green wash. Alternate section ground (for example, Contact) to break up coconut without going full evergreen. `#F1F6F1` is an even lighter hover wash on rows. |
 | Coconut | `#FBFAF6` | The default canvas and page background. Warm off-white, never stark white. |
 | Ink | `#16221B` | Primary body and text ink, a green-tinted near-black. |
@@ -53,12 +53,12 @@ This palette runs with almost no contrast headroom. Several pairings that look s
 
 | Pairing | Ratio | Verdict |
 |---|---|---|
-| Piña Gold `#C9A24B` text on Evergreen `#0E3D2B` | 5.09 | PASS (gold text is legal only here) |
-| Evergreen text on Gold pill `#C9A24B` | 5.09 | PASS (the one gold CTA) |
+| Piña Gold `#DDAF3C` text on Evergreen `#0E3D2B` | 5.97 | PASS (gold text is legal only here) |
+| Evergreen text on Gold pill `#DDAF3C` | 5.97 | PASS (the one gold CTA) |
 | Palm `#1E7A55` text on Coconut `#FBFAF6` | 5.06 | PASS |
 | Palm text on Leaf Tint `#EDF3ED` | 4.70 | PASS, barely |
 | White/Coconut text on Palm `#1E7A55` | 4.59 | PASS, barely (the primary CTA) |
-| Piña Gold on Coconut/Leaf as text (eyebrows, numbers, dots) | 2.30 | FAIL |
+| Piña Gold on Coconut/Leaf as text (eyebrows, numbers, dots) | 1.97 | FAIL |
 | Palm on Evergreen (italic emphasis word, dots) | 2.31 | FAIL |
 | Light text at alpha 0.5 on Evergreen (footer copyright, back-to-top style links) | 3.86 | FAIL |
 

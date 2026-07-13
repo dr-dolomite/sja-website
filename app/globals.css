@@ -69,10 +69,12 @@
   --primary: oklch(0.517 0.103 161); /* Palm #1E7A55 */
   --primary-foreground: oklch(0.985 0.005 95); /* Coconut */
 
-  /* Piña Gold (#C9A24B) — fine detail only. As a FILL it is the one gold pill
-     CTA on evergreen; Evergreen foreground on it = 5.09:1 (AA). Gold as text
-     is legal ONLY on an evergreen ground (see DESIGN.md contrast matrix). */
-  --secondary: oklch(0.731 0.115 85); /* Piña Gold #C9A24B */
+  /* Piña Gold (#DDAF3C) — fine detail only. Brightened from the old muted
+     #C9A24B so it reads as true gold rather than mustard; same warm hue, more
+     lightness + chroma. As a FILL it is the one gold pill CTA on evergreen;
+     Evergreen foreground on it = 5.97:1 (AA, up from 5.09). Gold as text is
+     legal ONLY on an evergreen ground (see DESIGN.md contrast matrix). */
+  --secondary: oklch(0.776 0.138 86); /* Piña Gold #DDAF3C */
   --secondary-foreground: oklch(0.323 0.06 164); /* Evergreen #0E3D2B */
 
   /* Leaf Tint family (#EDF3ED / #F1F6F1) — the soft break surfaces. */
@@ -147,7 +149,7 @@
   --primary: oklch(0.6 0.11 161);
   --primary-foreground: oklch(0.18 0.02 158); /* near-black text on lit Palm */
   /* Piña Gold lifted slightly; evergreen text keeps the gold pill legible. */
-  --secondary: oklch(0.76 0.12 85);
+  --secondary: oklch(0.81 0.145 86);
   --secondary-foreground: oklch(0.28 0.055 164); /* Evergreen */
   --muted: oklch(0.24 0.012 158); /* elevated dark break surface, not a light box */
   --muted-foreground: oklch(0.74 0.02 152); /* light green-gray, passes on dark */
