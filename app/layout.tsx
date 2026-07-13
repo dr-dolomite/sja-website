@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { Sora, Marcellus, Geist_Mono } from "next/font/google";
+import { Instrument_Serif, Hanken_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const sora = Sora({
+// Body / UI / labels — the workhorse humanist sans (Serif-as-Display rule).
+const hankenGrotesk = Hanken_Grotesk({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-const marcellus = Marcellus({
+// Display / all headings — single-weight (400) roman + italic. Display use only
+// (>= ~24px floor; smaller titles fall back to Hanken semibold — see DESIGN.md).
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
+  style: ["normal", "italic"],
   variable: "--font-serif",
 });
 
@@ -36,8 +40,8 @@ export default function RootLayout({
       className={cn(
         "h-full",
         "antialiased",
-        sora.variable,
-        marcellus.variable,
+        hankenGrotesk.variable,
+        instrumentSerif.variable,
         geistMono.variable,
         "font-sans"
       )}

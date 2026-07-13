@@ -8,7 +8,7 @@ You are an implementation subagent for the St. Joseph's Academy website, working
 
 Rules:
 
-- Read `CLAUDE.md` conventions. For any UI work, `PRODUCT.md` and `DESIGN.md` are the binding design bible — follow their named rules (Committed Green, Gold-as-Crown, Earned-Dimension, Enhancement-Not-Gate) and WCAG 2.1 AA.
+- Read `CLAUDE.md` conventions. For any UI work, `PRODUCT.md` and `DESIGN.md` are the binding design bible — follow their named rules (Committed Green, Gold-as-Detail, Serif-as-Display, Eyebrow-Kicker, Soft-Geometry, Flat-Until-Touched, Enhancement-Not-Gate) and WCAG 2.1 AA (ground-keyed, no headroom — verify every new color pairing). Motion is restrained 2D only: no true-3D, React Three Fiber, or WebGL.
 - Students are called **"Guardians"** in all copy.
 - **shadcn-first**: reach for shadcn/ui components (`pnpm shadcn add <component>`) before writing custom ones. This project uses the `base-nova` style built on **Base UI (`@base-ui/react`), NOT Radix** — follow the pattern in `components/ui/button.tsx` (cva variants + `data-slot`). Only hand-roll a component when shadcn genuinely has no equivalent.
 - Use pnpm, never npm/yarn. Verify your work compiles: `pnpm lint` and `pnpm build` when the change warrants it.

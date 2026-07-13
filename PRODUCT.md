@@ -17,13 +17,15 @@ Their context is mostly mobile, on varied connections, spanning a wide age and t
 
 ## Product Purpose
 
-A marketing and brand home for **St. Joseph's Academy of Malinao, Inc.** — a private, Catholic (Diocesan) school. The site exists to present the school's identity, community, and values to the world, build pride and trust across every stakeholder group, and provide a simple, obvious way to get in touch.
+A marketing and brand home for **St. Joseph's Academy of Malinao, Inc.**, a private, Catholic (Diocesan) school in Malinao, Aklan, Philippines, under the **Diocese of Kalibo**. The school is a member of **CEAP Region VI**, is **PEAC** certified, participates in the **ESC voucher** program, and runs **Junior and Senior High School** on DepEd's newest JHS and Strengthened SHS (3-term) curriculum. The site exists to present the school's identity, community, and values to the world, build pride and trust across every stakeholder group, and provide a simple, obvious way to get in touch.
+
+The school's motto, **"Be like St. Joseph,"** and its core values, **Selfless, Just, Achiever,** anchor the institution's character and should surface naturally in how the site presents itself.
 
 Success looks like: a visitor who has never heard of SJA understands within seconds what kind of school it is and how it feels to belong there — and knows exactly how to reach the school when they're ready.
 
 ## Brand Personality
 
-**Vibrant, welcoming, proud, forward-thinking.** The energy of an active school community grounded in the dignity of a Catholic institution — spirited, not solemn; warm, not corporate. Rooted in tradition, yet unmistakably modern: the school honors its heritage while presenting itself as innovative and future-facing.
+**Vibrant, welcoming, proud, forward-thinking.** The energy of an active school community grounded in the dignity of a Catholic institution, spirited, not solemn; warm, not corporate. Rooted in tradition, yet unmistakably modern: the school honors its heritage while presenting itself through considered motion and editorial craft rather than dated ornament. An editorial, magazine-like confidence, not a SaaS product or a clip-art school site.
 
 - **Voice:** encouraging and human, spoken from a community that knows its students by name. Faith-rooted without being preachy. Celebrates achievements without boasting.
 - **Naming convention:** students are **"Guardians"** — use this term deliberately throughout; it is the heart of the brand and carries the school's protective, faithful, community identity.
@@ -44,7 +46,7 @@ The site must **not** look or feel like:
 3. **Every stakeholder finds their path.** Prospective parents, current families, and alumni each have distinct needs; the information architecture should let each self-select quickly without clutter for the others.
 4. **Show, don't tell.** Prove the school's character through photography, achievements, and life at SJA rather than adjective-heavy copy. Belonging is demonstrated, not asserted.
 5. **Contact is always one step away.** The simple goal — getting in touch — must never be more than a tap or a scroll from any page.
-6. **Rooted, but forward-thinking.** The school's Catholic heritage and traditions are a source of pride, not a reason to look dated. Signal innovation and a future-facing mindset through a genuinely modern presentation — depth, dimensionality, and considered motion — while never sacrificing the institution's dignity, legibility, or accessibility. Modern in craft, timeless in values.
+6. **Rooted, but forward-thinking.** The school's Catholic heritage and traditions are a source of pride, not a reason to look dated. Signal innovation and a future-facing mindset through a genuinely modern presentation, considered motion and editorial craft, while never sacrificing the institution's dignity, legibility, or accessibility. Modern in craft, timeless in values.
 
 ## Accessibility & Inclusion
 

@@ -32,14 +32,14 @@ export function SiteHeader() {
             priority
             className="h-11 w-11 shrink-0 sm:h-12 sm:w-12"
           />
-          <span className="flex flex-col leading-tight">
+          <div className="grid gap-0">
             <span className="font-sans text-base font-semibold tracking-tight sm:text-lg">
               St. Joseph&rsquo;s Academy
             </span>
             <span className="text-xs text-muted-foreground sm:text-sm">
-              of Malinao, Inc. &middot; Est. 1947
+              of Malinao, Inc.
             </span>
-          </span>
+          </div>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">

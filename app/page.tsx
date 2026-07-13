@@ -1,5 +1,7 @@
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/hero/hero";
+import { GuardianStory } from "@/components/home/guardian-story";
 
 export default function Home() {
   return (
@@ -13,7 +15,9 @@ export default function Home() {
       <SiteHeader />
       <main id="main-content" className="flex flex-1 flex-col">
         <Hero />
+        <GuardianStory />
       </main>
+      <SiteFooter />
     </>
   );
 }
