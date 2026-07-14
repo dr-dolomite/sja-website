@@ -15,9 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { AFFILIATION_MARKS, type AffiliationMark } from "@/lib/affiliations";
 import { Button } from "@/components/ui/button";
-
-import heroMain from "../../public/images/hero/sja-new.jpg";
-import heroInset from "../../public/images/hero/selfless-voices.jpg";
+import { GuardianDeck } from "@/components/hero/guardian-deck";
 
 // The accreditation / affiliation marks live in lib/affiliations.ts so the hero
 // trust-bar (a slow drift) and the footer strip (static) stay in sync. Order
@@ -55,19 +53,6 @@ const clusterVariants: Variants = {
     scale: 1,
     y: 0,
     transition: { duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-// The gold orbit ring is pure decoration (Soft-Geometry, not a trust signal),
-// so it is the one element in the hero allowed an opacity fade, a "ring draw"
-// that lags a beat behind the photo settling into place. MotionConfig below
-// still snaps it fully visible under reduced motion.
-const ringVariants: Variants = {
-  hidden: { scale: 0.9, opacity: 0 },
-  show: {
-    scale: 1,
-    opacity: 1,
-    transition: { duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -174,7 +159,7 @@ export function Hero() {
           </div>
 
           {/* ============ HERO GRID ============ */}
-          <div className="relative mx-auto w-full max-w-[80rem] px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12 lg:py-24">
+          <div className="relative mx-auto w-full max-w-[80rem] px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-12 lg:py-24">
             {/* Soft Palm radial glow, atmospheric only, clipped by the
                section's overflow-hidden so it never widens the viewport. */}
             <div
@@ -193,64 +178,59 @@ export function Hero() {
               animate="show"
               className="relative z-10 order-1"
             >
-              {/* Eyebrow: a gold linework rule (decorative) plus Palm tracked
-                 label. No interpunct separator (house rule); the rule + comma
-                 phrasing is the whole device. */}
-              <m.p
-                variants={itemVariants}
-                className="flex items-center gap-3 text-xs font-semibold tracking-[0.22em] text-primary uppercase"
-              >
-                <span aria-hidden="true" className="h-[2px] w-7 shrink-0 bg-secondary" />
-                Malinao, Aklan, Philippines
-              </m.p>
-
               {/* Instrument Serif, font-normal only (the face has no true
                  bold; forcing font-bold faux-bolds and distorts the
                  hairlines). The italic "tomorrow" is Palm-on-Coconut, a legal
                  light-ground emphasis per DESIGN.md. */}
               <m.h1
                 variants={itemVariants}
-                className="mt-6 font-serif text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.03] font-normal tracking-[-0.01em] text-balance text-grove-deep"
+                className="mt-0 font-serif text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.03] font-normal tracking-[-0.01em] text-balance text-grove-deep"
               >
                 Rooted in faith,{" "}
                 <br className="hidden sm:block" />
                 growing toward <em className="text-primary italic">tomorrow</em>.
               </m.h1>
 
-              {/* The motto lives here as a supporting line, not as a values-strip
-                 item. Instrument Serif italic Palm on Coconut is a legal
-                 light-ground emphasis (5.06:1) and stays at the 24px serif floor
-                 (text-2xl), well under the headline so hierarchy reads clean. */}
-              <m.p
-                variants={itemVariants}
-                className="mt-5 font-serif text-2xl leading-tight text-primary italic text-pretty"
-              >
-                &ldquo;Be like St. Joseph.&rdquo;
-              </m.p>
-
+              {/* The motto is woven into the subhead itself rather than set as
+                 its own display line. "be like St. Joseph" picks up the serif
+                 display voice (Instrument Serif italic) so it echoes the
+                 headline's italic word, in Palm on Coconut, a legal
+                 light-ground emphasis (5.06:1). Phrased with a comma, not a
+                 colon, so the values read as an apposition. */}
               <m.p
                 variants={itemVariants}
                 className="mt-5 max-w-[480px] text-lg leading-[1.65] text-pretty text-muted-foreground"
               >
                 A Diocesan Catholic school in the heart of Malinao, forming
-                Guardians who are selfless, just, and achievers, in junior and
-                senior high school and beyond.
+                Guardians to{" "}
+                <em className="font-serif text-primary italic">
+                  be like St. Joseph
+                </em>
+                , selfless, just, and achievers in junior and senior high
+                school and beyond.
               </m.p>
 
               <m.div
                 variants={itemVariants}
                 className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
               >
-                {/* Palm primary pill CTA. border-primary + an opaque darker
-                   hover fill: the shared button base pairs a 1px transparent
-                   border with bg-clip-padding, so a translucent hover:bg lets
-                   the page show through as a white hairline. A matching green
-                   border and a solid hover fill close that gap and give a
-                   proper darken-on-hover instead of a wash. */}
+                {/* Palm primary pill CTA (DESIGN.md "Palm primary pill button":
+                   full radius, soft green shadow that deepens on hover, ~-2px
+                   lift). The shadcn Button base ships `border border-transparent
+                   bg-clip-padding`, which clips the fill to the padding box and
+                   leaves the 1px transparent border ring unpainted, so the pill
+                   edge showed a faint light hairline ("smudge"). `bg-clip-border`
+                   paints the Palm fill across the full border box, so the edge
+                   is one clean color with no rim, at rest and on the opaque
+                   darker hover fill alike. The shadow is a deep, low-spread
+                   Evergreen tint (rgba(14,61,43,...)) per DESIGN.md section 4,
+                   not a Palm glow, so the button reads premium and grounded
+                   rather than SaaS-neon, and deepens as it lifts on hover. The
+                   base's focus-visible ring is inherited unchanged. */}
                 <Button
                   render={<Link href="/admissions" />}
                   nativeButton={false}
-                  className="h-[52px] rounded-full border-primary bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/20 transition-[transform,box-shadow,background-color,border-color] hover:-translate-y-0.5 hover:border-[color-mix(in_oklch,var(--primary),#000_10%)] hover:bg-[color-mix(in_oklch,var(--primary),#000_10%)] hover:shadow-xl hover:shadow-primary/30"
+                  className="h-[52px] rounded-full bg-primary bg-clip-border px-8 text-base font-semibold text-primary-foreground shadow-[0_10px_28px_-10px_rgba(14,61,43,0.20)] transition-[transform,box-shadow,background-color] duration-300 ease-[var(--ease-grove)] hover:-translate-y-0.5 hover:bg-[color-mix(in_oklch,var(--primary),#000_10%)] hover:shadow-[0_18px_40px_-12px_rgba(14,61,43,0.28)]"
                 >
                   Apply Today
                 </Button>
@@ -268,58 +248,18 @@ export function Hero() {
               </m.div>
             </m.div>
 
-            {/* RIGHT COLUMN: photo cluster. A fluid, percentage-based
-               container so it scales without transform hacks and never
-               overflows the viewport; every child is positioned with
-               percentage offsets so registration holds at every width. */}
+            {/* RIGHT COLUMN: the Guardian coverflow deck. The deck manages
+               its own portrait aspect ratio and sizing internally (fans
+               outward from a centred 3:4 card), so this wrapper only
+               contributes the shared scale-in entrance, no aspect ratio or
+               max-width cap of its own. */}
             <m.div
               variants={clusterVariants}
               initial="hidden"
               animate="show"
-              className="relative z-10 order-2 mx-auto mt-14 aspect-[440/560] w-full max-w-[440px] lg:mt-0"
+              className="relative z-10 order-2 mt-14 w-full lg:mt-0"
             >
-              {/* Main blob photo, the LCP image: organic mask, soft shadow,
-                 priority + blur placeholder from the static import. */}
-              <div
-                className="absolute top-0 right-0 aspect-[400/440] w-[91%] overflow-hidden shadow-[0_30px_60px_-15px_rgba(14,61,43,0.30)]"
-                style={{
-                  borderRadius: "58% 42% 55% 45% / 52% 46% 54% 48%",
-                }}
-              >
-                <Image
-                  src={heroMain}
-                  alt="Four Guardians of St. Joseph's Academy in their green-and-white school uniforms."
-                  fill
-                  placeholder="blur"
-                  priority
-                  sizes="(min-width:1024px) 40vw, 90vw"
-                  className="object-cover"
-                  style={{ objectPosition: "center" }}
-                />
-              </div>
-
-              {/* Gold orbit ring, decorative linework, its own reveal. */}
-              <m.div
-                variants={ringVariants}
-                aria-hidden="true"
-                className="pointer-events-none absolute top-[6%] right-[8%] aspect-square w-[86%] rounded-full border-[1.5px] border-secondary/70"
-              />
-
-              {/* Inset circle photo, a Coconut separator ring keeps it
-                 distinct from the canvas behind it. */}
-              <div className="absolute bottom-[6%] left-0 aspect-square w-[43%] overflow-hidden rounded-full shadow-[0_18px_40px_-12px_rgba(14,61,43,0.24)] ring-4 ring-background">
-                <Image
-                  src={heroInset}
-                  alt="Guardians of the school choir celebrate their CEAP Catholic League championship."
-                  fill
-                  placeholder="blur"
-                  loading="lazy"
-                  sizes="(min-width:1024px) 18vw, 40vw"
-                  className="object-cover"
-                  style={{ objectPosition: "center" }}
-                />
-              </div>
-
+              <GuardianDeck />
             </m.div>
           </div>
 
