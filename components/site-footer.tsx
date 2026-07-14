@@ -67,7 +67,7 @@ export function SiteFooter() {
            one of the design's encouraged full-bleed green grounds. grove-deep
            (Evergreen, ~0.33 L) carries light copy well past AA, and grounds the
            long Coconut-canvas scroll above it. */}
-        <footer className="bg-grove-deep text-grove-foreground">
+        <footer className="border-t border-grove-foreground/10 bg-grove-deep text-grove-foreground">
           <m.div
             variants={containerVariants}
             initial="hidden"
@@ -122,6 +122,16 @@ export function SiteFooter() {
                       </a>
                     );
                   })}
+                  {/* Email, same icon-pill treatment as the socials above. No
+                     target/rel: a mailto: link isn't a same-tab navigation
+                     risk the way an external social profile is. */}
+                  <a
+                    href={siteConfig.email.href}
+                    aria-label={`Email ${siteConfig.shortName}`}
+                    className="flex size-10 items-center justify-center rounded-full bg-grove-foreground/10 text-grove-foreground transition-colors hover:bg-grove-foreground/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grove-foreground/70"
+                  >
+                    <Mail aria-hidden="true" className="size-5" />
+                  </a>
                 </div>
               </m.div>
 
@@ -217,7 +227,11 @@ export function SiteFooter() {
                       />
                       <span className="flex flex-col gap-0.5">
                         <span className="text-grove-foreground">{slot.days}</span>
-                        <span>{slot.hours}</span>
+                        {slot.periods.map((period) => (
+                          <span key={period.label}>
+                            {period.label}: {period.hours}
+                          </span>
+                        ))}
                       </span>
                     </li>
                   ))}

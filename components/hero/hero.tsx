@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Pause, Play } from "lucide-react";
 import {
   LazyMotion,
   MotionConfig,
@@ -77,7 +77,7 @@ function AffiliationMark({ mark }: { mark: AffiliationMark }) {
       <div
         className={cn(
           "flex items-center justify-center rounded-xl border border-border bg-card",
-          mark.emblem ? "px-2.5 py-1" : "px-3 py-1.5"
+          mark.emblem ? "px-2.5 py-1" : "px-3 py-1.5",
         )}
       >
         {/* w-auto keeps each logo's true proportions from its width/height, so
@@ -90,7 +90,7 @@ function AffiliationMark({ mark }: { mark: AffiliationMark }) {
           height={mark.height}
           className={cn(
             "w-auto shrink-0 object-contain",
-            mark.emblem ? "h-6 sm:h-7" : "h-5 sm:h-6"
+            mark.emblem ? "h-6 sm:h-7" : "h-5 sm:h-6",
           )}
         />
       </div>
@@ -99,6 +99,11 @@ function AffiliationMark({ mark }: { mark: AffiliationMark }) {
 }
 
 export function Hero() {
+  // The affiliation marquee auto-drifts, so WCAG 2.2.2 wants an explicit
+  // pause mechanism (the logos aren't focusable, so hover/focus alone won't
+  // serve keyboard or touch users). This toggle drives animation-play-state.
+  const [marqueePaused, setMarqueePaused] = React.useState(false);
+
   return (
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
@@ -113,7 +118,7 @@ export function Hero() {
              this bar moves; the values strip further down is static, so the
              page never has two adjacent drifting bands. */}
           <div className="border-b border-border">
-            <div className="mx-auto w-full max-w-[80rem] px-4 py-2.5 sm:px-6">
+            <div className="mx-auto w-full max-w-7xl px-4 py-2.5 sm:px-6">
               {/* The trust cluster is bounded (max-w) and pushed to the right
                  with ml-auto, so it reads as a compact right-aligned strip sized
                  to its logos, not an edge-to-edge marquee band. On mobile the cap
@@ -124,18 +129,44 @@ export function Hero() {
                 animate="show"
                 role="group"
                 aria-label="Accreditations and affiliations"
-                className="ml-auto flex w-full max-w-[44rem] items-center gap-3 sm:gap-4"
+                className="ml-auto flex w-full max-w-176 items-center gap-3 sm:gap-4"
               >
+                {/* Explicit stop control (WCAG 2.2.2). Icon-only but named for
+                   assistive tech; aria-pressed reflects the paused state. */}
+                <button
+                  type="button"
+                  onClick={() => setMarqueePaused((paused) => !paused)}
+                  aria-pressed={marqueePaused}
+                  aria-label={
+                    marqueePaused
+                      ? "Resume the affiliations scroll"
+                      : "Pause the affiliations scroll"
+                  }
+                  className="flex size-6 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-[color-mix(in_oklch,var(--primary),transparent_92%)] hover:text-grove-deep focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:hidden"
+                >
+                  {marqueePaused ? (
+                    <Play aria-hidden="true" className="size-3" />
+                  ) : (
+                    <Pause aria-hidden="true" className="size-3" />
+                  )}
+                </button>
                 <span className="shrink-0 text-xs text-muted-foreground">
                   Accredited &amp; affiliated
                 </span>
-                <div className="group relative min-w-0 flex-1 overflow-hidden py-0.5 [mask-image:linear-gradient(to_right,transparent,black_7%,black_93%,transparent)]">
+                <div className="group relative min-w-0 flex-1 overflow-hidden py-0.5 mask-[linear-gradient(to_right,transparent,black_7%,black_93%,transparent)]">
                   {/* Two identical halves; the drift translates by exactly one
                      half (-50% of the track), landing the second where the
                      first began, a seamless, endless loop. Each half repeats
                      the marks twice so a single half is always wider than the
-                     viewport, leaving no bare stretch before the loop point. */}
-                  <div className="flex w-max items-center [animation:affiliation-drift_60s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:[animation:none]">
+                     viewport, leaving no bare stretch before the loop point.
+                     The button-driven pause (inline play-state) overrides the
+                     hover-pause; when running, group-hover still pauses. */}
+                  <div
+                    style={{
+                      animationPlayState: marqueePaused ? "paused" : undefined,
+                    }}
+                    className="flex w-max items-center animate-[affiliation-drift_60s_linear_infinite]"
+                  >
                     {[0, 1].map((half) => (
                       <div
                         key={half}
@@ -148,7 +179,7 @@ export function Hero() {
                               key={`${half}-${rep}-${mark.key}`}
                               mark={mark}
                             />
-                          ))
+                          )),
                         )}
                       </div>
                     ))}
@@ -159,12 +190,12 @@ export function Hero() {
           </div>
 
           {/* ============ HERO GRID ============ */}
-          <div className="relative mx-auto w-full max-w-[80rem] px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-12 lg:py-24">
+          <div className="relative mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 lg:grid lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-12 lg:py-24">
             {/* Soft Palm radial glow, atmospheric only, clipped by the
                section's overflow-hidden so it never widens the viewport. */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -top-24 -left-32 size-[38rem] rounded-full"
+              className="pointer-events-none absolute -top-24 -left-32 size-152 rounded-full"
               style={{
                 background:
                   "radial-gradient(circle, color-mix(in oklch, var(--primary) 10%, transparent) 0%, transparent 68%)",
@@ -186,27 +217,25 @@ export function Hero() {
                 variants={itemVariants}
                 className="mt-0 font-serif text-[clamp(2.5rem,6vw,4.75rem)] leading-[1.03] font-normal tracking-[-0.01em] text-balance text-grove-deep"
               >
-                Rooted in faith,{" "}
-                <br className="hidden sm:block" />
-                growing toward <em className="text-primary italic">tomorrow</em>.
+                Rooted in faith, <br className="hidden sm:block" />
+                growing toward <em className="text-primary italic">tomorrow</em>
+                .
               </m.h1>
 
               {/* The motto is woven into the subhead itself rather than set as
-                 its own display line. "be like St. Joseph" picks up the serif
-                 display voice (Instrument Serif italic) so it echoes the
-                 headline's italic word, in Palm on Coconut, a legal
+                 its own display line. "be like St. Joseph" is carried in Hanken
+                 Grotesk italic + Palm (medium weight) rather than Instrument
+                 Serif: at this 18px body size the serif's hairlines erode below
+                 the display size floor, so the sans italic holds the emphasis
+                 without the legibility tax. Palm on Coconut is a legal
                  light-ground emphasis (5.06:1). Phrased with a comma, not a
                  colon, so the values read as an apposition. */}
               <m.p
                 variants={itemVariants}
-                className="mt-5 max-w-[480px] text-lg leading-[1.65] text-pretty text-muted-foreground"
+                className="mt-5 max-w-120 text-lg leading-[1.65] text-pretty text-muted-foreground"
               >
                 A Diocesan Catholic school in the heart of Malinao, forming
-                Guardians to{" "}
-                <em className="font-serif text-primary italic">
-                  be like St. Joseph
-                </em>
-                , selfless, just, and achievers in junior and senior high
+                Guardians to be like St. Joseph in junior and senior high
                 school and beyond.
               </m.p>
 
@@ -230,7 +259,7 @@ export function Hero() {
                 <Button
                   render={<Link href="/admissions" />}
                   nativeButton={false}
-                  className="h-[52px] rounded-full bg-primary bg-clip-border px-8 text-base font-semibold text-primary-foreground shadow-[0_10px_28px_-10px_rgba(14,61,43,0.20)] transition-[transform,box-shadow,background-color] duration-300 ease-[var(--ease-grove)] hover:-translate-y-0.5 hover:bg-[color-mix(in_oklch,var(--primary),#000_10%)] hover:shadow-[0_18px_40px_-12px_rgba(14,61,43,0.28)]"
+                  className="h-13 rounded-full bg-primary bg-clip-border px-8 text-base font-semibold text-primary-foreground shadow-[0_10px_28px_-10px_rgba(14,61,43,0.20)] transition-[transform,box-shadow,background-color] duration-300 ease-(--ease-grove) hover:-translate-y-0.5 hover:bg-[color-mix(in_oklch,var(--primary),#000_10%)] hover:shadow-[0_18px_40px_-12px_rgba(14,61,43,0.28)]"
                 >
                   Apply Today
                 </Button>
@@ -240,10 +269,10 @@ export function Hero() {
                    and a barely-there Palm wash. No gold underline. */}
                 <Link
                   href="/about"
-                  className="group/link inline-flex h-[52px] w-fit items-center gap-1.5 rounded-full border border-border px-7 text-base font-semibold text-grove-deep transition-[transform,background-color,border-color] duration-300 ease-[var(--ease-grove)] hover:-translate-y-0.5 hover:border-[color-mix(in_oklch,var(--primary),transparent_55%)] hover:bg-[color-mix(in_oklch,var(--primary),transparent_92%)] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+                  className="group/link inline-flex h-13 w-fit items-center gap-1.5 rounded-full border border-border px-7 text-base font-semibold text-grove-deep transition-[transform,background-color,border-color] duration-300 ease-(--ease-grove) hover:-translate-y-0.5 hover:border-[color-mix(in_oklch,var(--primary),transparent_55%)] hover:bg-[color-mix(in_oklch,var(--primary),transparent_92%)] focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
                 >
                   Get to know us
-                  <ArrowRight className="size-4 transition-transform duration-300 ease-[var(--ease-grove)] group-hover/link:translate-x-0.5" />
+                  <ArrowRight className="size-4 transition-transform duration-300 ease-(--ease-grove) group-hover/link:translate-x-0.5" />
                 </Link>
               </m.div>
             </m.div>
@@ -261,25 +290,6 @@ export function Hero() {
             >
               <GuardianDeck />
             </m.div>
-          </div>
-
-          {/* ============ VALUES STRIP ============ */}
-          <div className="border-t border-b border-border bg-background">
-            {/* Dots sit BETWEEN values only (render for index > 0), so there is
-               no dangling separator now that the motto has moved up to the
-               headline. */}
-            <div className="mx-auto flex w-full max-w-[80rem] flex-wrap items-center justify-center gap-x-5 gap-y-3 px-4 py-5 sm:px-6">
-              {["Selfless", "Just", "Achiever"].map((value, i) => (
-                <React.Fragment key={value}>
-                  {i > 0 && (
-                    <span aria-hidden="true" className="size-[5px] rounded-full bg-secondary" />
-                  )}
-                  <span className="text-[13px] font-semibold tracking-[0.24em] text-grove-deep uppercase">
-                    {value}
-                  </span>
-                </React.Fragment>
-              ))}
-            </div>
           </div>
         </section>
       </MotionConfig>

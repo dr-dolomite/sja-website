@@ -1,7 +1,12 @@
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/hero/hero";
-import { GuardianStory } from "@/components/home/guardian-story";
+import { VisionMission } from "@/components/home/vision-mission";
+import { CoreValues } from "@/components/home/core-values";
+import { LifeOfGuardians } from "@/components/home/life-of-guardians";
+import { Offerings } from "@/components/home/offerings";
+import { News } from "@/components/home/news";
+import { Admissions } from "@/components/home/admissions";
 
 export default function Home() {
   return (
@@ -15,7 +20,12 @@ export default function Home() {
       <SiteHeader />
       <main id="main-content" className="flex flex-1 flex-col">
         <Hero />
-        <GuardianStory />
+        <CoreValues />
+        <VisionMission />
+        <LifeOfGuardians />
+        <Offerings />
+        <News />
+        <Admissions />
       </main>
       <SiteFooter />
     </>

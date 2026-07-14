@@ -1,17 +1,14 @@
 // Single source of truth for the school's public-facing identity and contact
-// facts. The footer (and any future contact page) reads from here so there is
-// one place to keep these correct.
-//
-// ─────────────────────────────────────────────────────────────────────────
-//  PLACEHOLDERS: every field tagged `PLACEHOLDER` below is not yet the real
-//  detail. Replace them with the school's actual information before this footer
-//  ships. The layout is built and testable against these stand-ins; the copy is
-//  not shippable until the TODOs are resolved.
-// ─────────────────────────────────────────────────────────────────────────
+// facts. The footer and the /contact page both read from here so there is one
+// place to keep these correct. Address, office hours, phone, and email are
+// all the school's real, confirmed details.
 
 export type NavLink = { href: string; label: string };
 export type SocialLink = { key: string; label: string; href: string };
-export type OfficeHours = { days: string; hours: string };
+export type OfficeHours = {
+  days: string;
+  periods: { label: string; hours: string }[];
+};
 
 export const siteConfig = {
   name: "St. Joseph's Academy of Malinao, Inc.",
@@ -22,32 +19,33 @@ export const siteConfig = {
     "A Catholic school in Malinao, Aklan, forming Guardians in faith and character since 1947.",
 
   address: {
-    // Malinao, Aklan's postal code (5606) is public and accurate; the street /
-    // barangay line is the PLACEHOLDER to confirm.
-    lines: [
-      "PLACEHOLDER: Street / Purok, Barangay", // TODO: real street + barangay
-      "Malinao, Aklan 5606",
-      "Philippines",
-    ],
-    // Google Maps "search" deep link — resolves by name with no API key or pin
-    // coordinates. Swap for the exact place URL once the pin is confirmed.
-    mapsUrl:
-      "https://www.google.com/maps/search/?api=1&query=St.%20Joseph%27s%20Academy%20of%20Malinao%2C%20Aklan",
+    lines: ["Sto. Rosario St., Poblacion", "Malinao, Aklan 5606", "Philippines"],
+    // Confirmed Google Maps short link for the campus pin.
+    mapsUrl: "https://maps.app.goo.gl/1FmhsNUA3oTLxRG58",
+    // No-API-key Google Maps "q=" embed built from the real street address,
+    // for the Contact page's iframe.
+    mapEmbedSrc:
+      "https://www.google.com/maps?q=Sto.+Rosario+St.%2C+Poblacion%2C+Malinao%2C+Aklan%2C+Philippines+5606&output=embed",
   },
 
   phone: {
-    display: "PLACEHOLDER: (036) 000 0000", // TODO: real landline / mobile
-    href: "tel:+63360000000", // TODO: match the real number
+    display: "(036) 272-7382",
+    href: "tel:+63362727382",
   },
 
   email: {
-    display: "PLACEHOLDER: hello@sjamalinao.edu.ph", // TODO: real inbox
-    href: "mailto:hello@sjamalinao.edu.ph", // TODO: match the real address
+    display: "sjamalinao@gmail.com",
+    href: "mailto:sjamalinao@gmail.com",
   },
 
   officeHours: [
-    { days: "Monday to Friday", hours: "PLACEHOLDER: 7:30 AM to 4:30 PM" }, // TODO
-    { days: "Saturday", hours: "PLACEHOLDER: 8:00 AM to 12:00 NN" }, // TODO
+    {
+      days: "Monday to Friday",
+      periods: [
+        { label: "Morning", hours: "7:30 AM to 11:20 AM" },
+        { label: "Afternoon", hours: "12:20 PM to 4:00 PM" },
+      ],
+    },
   ] satisfies OfficeHours[],
 
   socials: [
