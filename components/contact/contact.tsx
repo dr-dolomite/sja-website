@@ -9,7 +9,7 @@ import {
   type Variants,
 } from "motion/react";
 
-import { Button } from "@/components/ui/button";
+import { ContactForm } from "@/components/contact/contact-form";
 import { siteConfig } from "@/lib/site-config";
 
 // Same transform-only rise + stagger contract as every other homepage section
@@ -165,43 +165,39 @@ export function Contact() {
                     </a>
                   </m.div>
                 </m.div>
-
-                <m.div variants={itemVariants} className="mt-10">
-                  <Button
-                    render={<a href={siteConfig.email.href} />}
-                    nativeButton={false}
-                    className="h-12 rounded-full px-8 text-base font-semibold"
-                  >
-                    Send an inquiry
-                  </Button>
-                </m.div>
               </m.div>
 
-              {/* Right: map card ---------------------------------------- */}
-              <m.div
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "0px 0px -15% 0px" }}
-                className="relative overflow-hidden rounded-[28px] border border-border shadow-[0_20px_50px_-24px_rgba(14,61,43,0.28)]"
-              >
-                <iframe
-                  src={siteConfig.address.mapEmbedSrc}
-                  title={`Map to ${siteConfig.name}`}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                  className="h-full min-h-[320px] w-full border-0 sm:min-h-[420px] lg:min-h-[460px]"
-                  style={{ border: 0 }}
-                />
-                {/* Thin gold ring accent, overlapping the bottom-right
-                   corner: decorative only, clear of the map controls. */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -bottom-10 -right-10 size-32 rounded-full border border-secondary/40"
-                />
-              </m.div>
+              {/* Right: the inquiry form -------------------------------- */}
+              <ContactForm />
             </div>
+
+            {/* Map band: framed, not a bare full-bleed slab, so it stays
+               warm rather than reading as a cold institutional embed. Flat
+               at rest per Flat-Until-Touched; the gold ring is the only
+               permanent accent. */}
+            <m.div
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "0px 0px -15% 0px" }}
+              className="relative mt-14 overflow-hidden rounded-[28px] border border-border sm:mt-20"
+            >
+              <iframe
+                src={siteConfig.address.mapEmbedSrc}
+                title={`Map to ${siteConfig.name}`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                className="h-full min-h-[280px] w-full border-0 sm:min-h-[360px] lg:min-h-[420px]"
+                style={{ border: 0 }}
+              />
+              {/* Thin gold ring accent, overlapping the bottom-right
+                 corner: decorative only, clear of the map controls. */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-10 -right-10 size-32 rounded-full border border-secondary/40"
+              />
+            </m.div>
           </div>
         </section>
       </MotionConfig>
