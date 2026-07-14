@@ -181,10 +181,10 @@ export function ComingSoon() {
                   variants={rise}
                   className="mt-6 max-w-[46ch] text-lg leading-[1.65] text-pretty text-grove-foreground/80"
                 >
-                  We&rsquo;re carefully growing a warmer, fuller window into life
-                  at St. Joseph&rsquo;s Academy of Malinao: a Diocesan Catholic
-                  school forming Guardians in faith and character since 1947. It
-                  opens soon.
+                  We&rsquo;re carefully growing a warmer, fuller window into
+                  life at St. Joseph&rsquo;s Academy of Malinao, a Diocesan
+                  Catholic school forming Guardians in faith and character
+                  since 1947. It opens soon.
                 </m.p>
 
                 {/* Motto: serif italic, kept at or above the display floor and
