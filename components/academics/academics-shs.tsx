@@ -67,10 +67,15 @@ export function AcademicsShs() {
            green mass for /academics, satisfying the Committed Green Rule
            after the Coconut intro and Leaf-Tint JHS beat. Full-bleed rather
            than a contained panel (unlike offerings.tsx) since this page
-           gives Senior High its own dedicated section, not a shared row. */}
+           gives Senior High its own dedicated section, not a shared row.
+           The big rounded top (matching vision-mission.tsx, admissions.tsx,
+           about-seal.tsx, about-philosophy-goals.tsx) lifts it off the
+           Leaf-Tint JHS section above instead of a hairline border-t, which
+           reads as a mismatched light-on-dark seam per --border's
+           translucent-evergreen-on-light design. */}
         <section
           aria-labelledby="academics-shs-eyebrow"
-          className="relative overflow-hidden border-t border-border bg-grove-deep text-grove-foreground"
+          className="relative overflow-hidden rounded-t-[40px] bg-grove-deep text-grove-foreground sm:rounded-t-[56px]"
         >
           {/* Barely-there gold glow, per Soft-Geometry. Decorative only. */}
           <div
@@ -106,16 +111,15 @@ export function AcademicsShs() {
                 Senior High School
               </m.p>
 
-              {/* Serif-as-Display heading. */}
+              {/* Serif-as-Display heading. Fully text-grove-foreground: gold
+                 stays confined to the eyebrow, the cluster numerals, the
+                 thin rings, and the closing marker glyph, never a large
+                 gold text block on this Evergreen ground. */}
               <m.h2
                 variants={itemVariants}
                 className="mt-5 max-w-[20ch] text-balance font-serif text-[clamp(2.25rem,4.6vw,3.5rem)] leading-[1.08] tracking-[-0.005em] text-grove-foreground"
               >
-                The Strengthened{" "}
-                <em className="font-medium italic text-secondary">
-                  Senior High School
-                </em>
-                .
+                The Strengthened Senior High School.
               </m.h2>
 
               {/* Body: exact SSHS facts. */}
