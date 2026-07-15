@@ -5,6 +5,7 @@ import { AcademicsIntro } from "@/components/academics/academics-intro";
 import { AcademicsJhs } from "@/components/academics/academics-jhs";
 import { AcademicsShs } from "@/components/academics/academics-shs";
 import { AcademicsFormation } from "@/components/academics/academics-formation";
+import { AcademicsCta } from "@/components/academics/academics-cta";
 
 export const metadata: Metadata = {
   title: "Academics | St. Joseph's Academy of Malinao",
@@ -27,6 +28,7 @@ export default function AcademicsPage() {
         <AcademicsJhs />
         <AcademicsShs />
         <AcademicsFormation />
+        <AcademicsCta />
       </main>
       <SiteFooter />
     </>
