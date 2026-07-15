@@ -149,15 +149,9 @@ export function AboutSeal() {
                 >
                   {SYMBOLS.map((symbol) => (
                     <div key={symbol.name} className="flex flex-col gap-2">
-                      <div className="flex items-center gap-3">
-                        <span
-                          aria-hidden="true"
-                          className="h-px w-8 bg-secondary"
-                        />
-                        <dt className="font-serif text-2xl leading-tight text-secondary">
-                          {symbol.name}
-                        </dt>
-                      </div>
+                      <dt className="font-serif text-2xl leading-tight text-secondary">
+                        {symbol.name}
+                      </dt>
                       <dd className="max-w-[36ch] text-pretty font-sans text-base leading-[1.7] text-grove-foreground/90">
                         {symbol.meaning}
                       </dd>

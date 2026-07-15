@@ -86,12 +86,9 @@ export function AboutVisionMission() {
               {/* Vision: the serif voice, but sized well below the homepage's
                  clamp so this reads as a restate, not a repeat. */}
               <div className="flex flex-col gap-4 lg:col-span-7">
-                <div className="flex items-center gap-3">
-                  <span aria-hidden="true" className="h-px w-8 bg-secondary" />
-                  <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-primary">
-                    The Vision
-                  </p>
-                </div>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-primary">
+                  The Vision
+                </p>
                 <h2 className="max-w-[22ch] text-balance font-serif text-[clamp(1.5rem,2.6vw,2rem)] leading-[1.15] tracking-[-0.005em] text-foreground">
                   A Christ-centered community inspired by the virtues of St.
                   Joseph.
@@ -101,12 +98,9 @@ export function AboutVisionMission() {
               {/* Mission: Hanken Grotesk, matching the homepage's voice split
                  (serif for Vision, sans for Mission's body-length prose). */}
               <div className="flex flex-col gap-4 lg:col-span-5">
-                <div className="flex items-center gap-3">
-                  <span aria-hidden="true" className="h-px w-8 bg-secondary" />
-                  <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-primary">
-                    The Mission
-                  </p>
-                </div>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-primary">
+                  The Mission
+                </p>
                 <p className="max-w-[46ch] text-pretty font-sans text-[15px] leading-[1.7] text-muted-foreground sm:text-base">
                   St. Joseph&rsquo;s Academy of Malinao, Aklan, Inc. forms
                   integral human persons by developing competent learners,

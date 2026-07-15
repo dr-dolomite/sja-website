@@ -54,21 +54,14 @@ export function AboutStory() {
             className="relative mx-auto w-full max-w-[88rem] px-4 py-20 sm:px-6 sm:py-28 lg:px-4"
           >
             {/* Eyebrow-kicker. Gold text is ground-keyed to evergreen only, so on
-               this Coconut ground the kicker is Palm (5.06:1 on Coconut, AA).
-               Unlike the other sections' bare eyebrows, the narrative heart of
-               the page leads with a thin gold rule (the same field-label idiom
-               vision-mission uses), so the seven section openings read as a
-               cadence rather than one uniform, repeated reflex. Decorative gold
-               linework only, legal on this light ground. */}
-            <m.div variants={itemVariants} className="flex items-center gap-3">
-              <span aria-hidden="true" className="h-px w-8 bg-secondary" />
-              <p
-                id="about-story-eyebrow"
-                className="text-[13px] font-semibold uppercase tracking-[0.22em] text-primary"
-              >
-                Our Story
-              </p>
-            </m.div>
+               this Coconut ground the kicker is Palm (5.06:1 on Coconut, AA). */}
+            <m.p
+              id="about-story-eyebrow"
+              variants={itemVariants}
+              className="text-[13px] font-semibold uppercase tracking-[0.22em] text-primary"
+            >
+              Our Story
+            </m.p>
 
             <m.h2
               variants={itemVariants}
