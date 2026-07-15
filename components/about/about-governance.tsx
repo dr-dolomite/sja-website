@@ -100,33 +100,51 @@ export function AboutGovernance() {
                 </p>
               </div>
 
-              {/* Coat of arms as a dignified inset, with Fr. Beluso's name
-                 and title as a small credit beneath it. Meaning-bearing text
-                 stays ink, not gold, on this light ground. */}
+              {/* The School Director's portrait leads (Community over
+                 corporate: a real face carries the governance section), with
+                 his name and title as the caption. The Diocese of Kalibo coat
+                 of arms sits beneath as the smaller diocesan-identity mark.
+                 Meaning-bearing text stays ink, not gold, on this light
+                 ground; the gold rings are decorative linework only. */}
               <m.div
                 variants={itemVariants}
-                className="flex flex-col items-start gap-4 lg:col-span-4 lg:items-center lg:justify-self-center"
+                className="flex flex-col items-start gap-6 lg:col-span-4 lg:items-center lg:justify-self-center"
               >
-                <div className="relative rounded-2xl border border-border bg-background p-6 shadow-sm">
-                  {/* Thin gold ring, decorative framing only. */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-2 rounded-xl border border-secondary/30"
-                  />
+                <figure className="w-full max-w-[19rem]">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border shadow-sm">
+                    <Image
+                      src="/school-director.jpg"
+                      alt="Rev. Fr. Mark Randy G. Beluso, School Director of St. Joseph's Academy of Malinao"
+                      fill
+                      sizes="(max-width: 1024px) 80vw, 19rem"
+                      className="object-cover object-top"
+                    />
+                    {/* Thin gold ring, decorative framing only. */}
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-3 rounded-xl border border-secondary/30"
+                    />
+                  </div>
+                  <figcaption className="mt-4 text-center">
+                    <p className="text-sm font-medium text-foreground">
+                      Rev. Fr. Mark Randy G. Beluso, S.Th.L., MA, MALS
+                    </p>
+                    <p className="mt-1 text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                      School Director
+                    </p>
+                  </figcaption>
+                </figure>
+
+                <div className="flex items-center gap-3">
                   <Image
                     src="/images/diocese-of-kalibo-coat-of-arms.webp"
                     alt="Coat of arms of the Diocese of Kalibo"
-                    width={128}
-                    height={128}
-                    className="relative h-28 w-28 object-contain sm:h-32 sm:w-32"
+                    width={48}
+                    height={48}
+                    className="h-12 w-12 object-contain"
                   />
-                </div>
-                <div className="text-center lg:text-center">
-                  <p className="text-sm font-medium text-foreground">
-                    Rev. Fr. Mark Randy G. Beluso, S.Th.L., MA, MALS
-                  </p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                    School Director
+                  <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                    Diocese of Kalibo
                   </p>
                 </div>
               </m.div>

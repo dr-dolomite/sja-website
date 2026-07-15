@@ -53,6 +53,11 @@ const MILESTONES = [
     label:
       "St. Joseph's Academy becomes a diocesan institution and the present building is constructed.",
   },
+  {
+    year: "Present",
+    label:
+      "Now in its 79th year, St. Joseph's Academy continues its mission under School Director Rev. Fr. Mark Randy G. Beluso.",
+  },
 ] as const;
 
 export function AboutStory() {
@@ -133,14 +138,14 @@ export function AboutStory() {
                 variants={itemVariants}
                 className="flex flex-col gap-8 lg:col-span-5"
               >
-                <figure className="mx-auto w-40 sm:w-44">
+                <figure className="mx-auto w-48 sm:w-56">
                   <div className="rounded-sm border border-foreground/15 bg-card p-2">
                     <div className="relative aspect-[526/701] overflow-hidden rounded-[2px]">
                       <Image
                         src="/history/founder.jpg"
                         alt="Monsignor Jose Y. Insauriga, founder of St. Joseph's Academy"
                         fill
-                        sizes="176px"
+                        sizes="224px"
                         className="object-cover object-top grayscale-[35%] sepia-[18%] contrast-[1.05]"
                       />
                     </div>
@@ -151,14 +156,14 @@ export function AboutStory() {
                 </figure>
 
                 <div className="grid grid-cols-2 gap-6 sm:gap-8">
-                  <figure className="mx-auto w-full max-w-36">
+                  <figure className="w-full">
                     <div className="rounded-sm border border-foreground/15 bg-card p-2">
                       <div className="relative aspect-[3/2] overflow-hidden rounded-[2px]">
                         <Image
                           src="/history/1948-1949-junior-class.jpg"
                           alt="The junior class of St. Joseph's Academy, school year 1948 to 1949"
                           fill
-                          sizes="144px"
+                          sizes="(max-width: 640px) 42vw, 240px"
                           className="object-cover grayscale-[35%] sepia-[18%] contrast-[1.05]"
                         />
                       </div>
@@ -168,14 +173,14 @@ export function AboutStory() {
                     </figcaption>
                   </figure>
 
-                  <figure className="mx-auto w-full max-w-36">
+                  <figure className="w-full">
                     <div className="rounded-sm border border-foreground/15 bg-card p-2">
                       <div className="relative aspect-[3/2] overflow-hidden rounded-[2px]">
                         <Image
                           src="/history/1968-foundation-day.jpg"
                           alt="Foundation Day at St. Joseph's Academy, 1968"
                           fill
-                          sizes="144px"
+                          sizes="(max-width: 640px) 42vw, 240px"
                           className="object-cover grayscale-[35%] sepia-[18%] contrast-[1.05]"
                         />
                       </div>
@@ -201,9 +206,13 @@ export function AboutStory() {
             >
               {MILESTONES.map((milestone) => (
                 <li key={milestone.year} className="relative">
+                  {/* Dot centered ON the border line: with pl-8 (2rem) the
+                     list content starts 2rem right of the border, so a size-2
+                     (0.5rem) dot centers on the line at -2.25rem (and -2.75rem
+                     at sm:pl-10). */}
                   <span
                     aria-hidden="true"
-                    className="absolute -left-[2.6rem] top-1.5 size-2 rounded-full bg-secondary sm:-left-[3.15rem]"
+                    className="absolute -left-[2.25rem] top-1.5 size-2 rounded-full bg-secondary sm:-left-[2.75rem]"
                   />
                   <p className="font-serif text-2xl leading-tight text-primary sm:text-[1.75rem]">
                     {milestone.year}
