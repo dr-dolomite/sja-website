@@ -141,7 +141,7 @@ export function AboutPhilosophyGoals() {
               variants={itemVariants}
               className="mt-10 max-w-[62ch] border-l-2 border-secondary/50 pl-6 sm:mt-14"
             >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-grove-foreground/60">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-grove-foreground/70">
                 Our Philosophy
               </p>
               {/*
@@ -153,14 +153,14 @@ export function AboutPhilosophyGoals() {
                 paraphrase or silently fix it; only replace it with a
                 school-approved rewrite.
               */}
-              <p className="mt-3 text-pretty font-serif text-xl leading-[1.5] text-grove-foreground sm:text-2xl">
+              <p className="mt-3 text-pretty font-serif text-2xl leading-[1.4] text-grove-foreground">
                 Every learner is capable of growth and transformational
                 education that is Christ-centered formation process,
                 nurturing the whole learner toward truth, excellence, and
                 responsible service to the Church and society.
               </p>
 
-              <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-grove-foreground/60">
+              <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-grove-foreground/70">
                 Institutional Goal
               </p>
               <p className="mt-3 text-pretty font-sans text-base leading-[1.7] text-grove-foreground/90 sm:text-lg">
@@ -194,7 +194,7 @@ export function AboutPhilosophyGoals() {
                     {goal.n}
                   </span>
                   <div className="flex flex-col gap-1.5 sm:flex-1">
-                    <h3 className="text-balance font-serif text-xl leading-[1.2] text-grove-foreground sm:text-2xl">
+                    <h3 className="text-balance font-serif text-2xl leading-[1.2] text-grove-foreground">
                       {goal.title}
                     </h3>
                     <p className="max-w-[58ch] text-pretty font-sans text-sm leading-[1.6] text-grove-foreground/80 sm:text-base">

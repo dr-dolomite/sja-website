@@ -83,10 +83,9 @@ export function AboutGovernance() {
                 </h2>
 
                 <p className="max-w-[62ch] text-pretty text-lg leading-[1.7] text-foreground">
-                  St. Joseph&rsquo;s Academy is a diocesan institution under
-                  the Diocese of Kalibo, governed in accordance with the
-                  Governance of Basic Education Act and the DepEd
-                  School-Based Management Framework.
+                  It is governed in accordance with the Governance of Basic
+                  Education Act and the DepEd School-Based Management
+                  Framework.
                 </p>
 
                 <p className="max-w-[62ch] text-pretty text-lg leading-[1.7] text-muted-foreground">
@@ -137,16 +136,21 @@ export function AboutGovernance() {
                in that order. Community over corporate: the governance section
                is carried by people, not an org chart. */}
             <div className="mt-16 sm:mt-24">
-              <m.p
+              {/* A thin centered gold rule, not a second "Leadership" eyebrow:
+                 the section already opens with the "Identity & Governance"
+                 kicker, the authority-flow sentence names the Bishop and the
+                 School Director, and each portrait carries its own role
+                 caption, so another tracked-uppercase label would just stack
+                 label on label. Decorative gold linework only. */}
+              <m.div
                 variants={itemVariants}
-                className="text-center text-[13px] font-semibold uppercase tracking-[0.22em] text-primary"
-              >
-                Leadership
-              </m.p>
+                aria-hidden="true"
+                className="mx-auto h-px w-12 bg-secondary/60"
+              />
 
               <m.div
                 variants={itemVariants}
-                className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-2"
+                className="mx-auto mt-12 grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-2"
               >
                 <figure className="flex flex-col">
                   <div className="relative aspect-square overflow-hidden rounded-2xl border border-border shadow-sm">

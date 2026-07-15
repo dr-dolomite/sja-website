@@ -12,7 +12,7 @@ import { AboutCta } from "@/components/about/about-cta";
 export const metadata: Metadata = {
   title: "About | St. Joseph's Academy of Malinao",
   description:
-    "The story, seal, philosophy, and diocesan identity of St. Joseph's Academy of Malinao, a Catholic school forming Guardians since 1948.",
+    "The story, seal, philosophy, and diocesan identity of St. Joseph's Academy of Malinao, a Catholic school forming Guardians since 1947.",
 };
 
 export default function AboutPage() {

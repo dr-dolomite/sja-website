@@ -73,7 +73,7 @@ export function AboutIntro() {
                 variants={itemVariants}
                 className="mt-5 max-w-[18ch] text-balance font-serif text-[clamp(2.5rem,5.4vw,4rem)] leading-[1.06] tracking-[-0.005em] text-grove-deep"
               >
-                A Catholic school in Malinao, forming Guardians since 1948.
+                A Catholic school in Malinao, forming Guardians since 1947.
               </m.h1>
 
               {/* Lede: Hanken Grotesk body voice, a readable measure. */}

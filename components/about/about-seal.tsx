@@ -113,7 +113,7 @@ export function AboutSeal() {
               <div className="flex justify-center lg:col-span-4 lg:justify-start">
                 <m.div
                   variants={itemVariants}
-                  className="relative flex size-56 items-center justify-center rounded-full border border-secondary/60 p-6 sm:size-64"
+                  className="relative flex size-64 items-center justify-center rounded-full border border-secondary/60 p-6 sm:size-72"
                 >
                   <div
                     aria-hidden="true"
@@ -124,7 +124,7 @@ export function AboutSeal() {
                     alt="The St. Joseph's Academy seal"
                     width={500}
                     height={500}
-                    className="relative h-auto w-full max-w-[13rem]"
+                    className="relative h-auto w-full max-w-[15rem]"
                   />
                 </m.div>
               </div>

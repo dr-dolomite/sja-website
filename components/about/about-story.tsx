@@ -33,33 +33,6 @@ const itemVariants: Variants = {
   },
 };
 
-// Facts (years, names) are exact per the school's history. The 1949-1950 range
-// uses an en dash (not the banned em dash) per house style.
-const MILESTONES = [
-  {
-    year: "1947",
-    label:
-      "Msgr. Insauriga convenes townspeople and proposes a Catholic school.",
-  },
-  {
-    year: "1948",
-    label:
-      "The old convent becomes five classrooms; classes open in June, and the Bureau of Private Schools issues the permit in December.",
-  },
-  { year: "1949–1950", label: "The first commencement exercises are held." },
-  { year: "1953", label: "The school is granted Government Recognition." },
-  {
-    year: "Fr. Soriano era",
-    label:
-      "St. Joseph's Academy becomes a diocesan institution and the present building is constructed.",
-  },
-  {
-    year: "Present",
-    label:
-      "Now in its 79th year, St. Joseph's Academy continues its mission under School Director Rev. Fr. Mark Randy G. Beluso.",
-  },
-] as const;
-
 export function AboutStory() {
   return (
     <LazyMotion features={domAnimation} strict>
@@ -81,14 +54,21 @@ export function AboutStory() {
             className="relative mx-auto w-full max-w-[88rem] px-4 py-20 sm:px-6 sm:py-28 lg:px-4"
           >
             {/* Eyebrow-kicker. Gold text is ground-keyed to evergreen only, so on
-               this Coconut ground the kicker is Palm (5.06:1 on Coconut, AA). */}
-            <m.p
-              id="about-story-eyebrow"
-              variants={itemVariants}
-              className="text-[13px] font-semibold uppercase tracking-[0.22em] text-primary"
-            >
-              Our Story
-            </m.p>
+               this Coconut ground the kicker is Palm (5.06:1 on Coconut, AA).
+               Unlike the other sections' bare eyebrows, the narrative heart of
+               the page leads with a thin gold rule (the same field-label idiom
+               vision-mission uses), so the seven section openings read as a
+               cadence rather than one uniform, repeated reflex. Decorative gold
+               linework only, legal on this light ground. */}
+            <m.div variants={itemVariants} className="flex items-center gap-3">
+              <span aria-hidden="true" className="h-px w-8 bg-secondary" />
+              <p
+                id="about-story-eyebrow"
+                className="text-[13px] font-semibold uppercase tracking-[0.22em] text-primary"
+              >
+                Our Story
+              </p>
+            </m.div>
 
             <m.h2
               variants={itemVariants}
@@ -195,34 +175,6 @@ export function AboutStory() {
                 </div>
               </m.div>
             </div>
-
-            {/* Vertical milestone timeline. Years are Evergreen serif numerals
-               (text-primary, ink, never gold) on this light ground; gold is
-               reserved for the connecting hairline and the small decorative dots
-               beside each year, which carry no meaning of their own. */}
-            <m.ol
-              variants={itemVariants}
-              className="relative mt-20 flex max-w-[66ch] flex-col gap-10 border-l border-secondary/40 pl-8 sm:mt-24 sm:gap-12 sm:pl-10"
-            >
-              {MILESTONES.map((milestone) => (
-                <li key={milestone.year} className="relative">
-                  {/* Dot centered ON the border line: with pl-8 (2rem) the
-                     list content starts 2rem right of the border, so a size-2
-                     (0.5rem) dot centers on the line at -2.25rem (and -2.75rem
-                     at sm:pl-10). */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute -left-[2.25rem] top-1.5 size-2 rounded-full bg-secondary sm:-left-[2.75rem]"
-                  />
-                  <p className="font-serif text-2xl leading-tight text-primary sm:text-[1.75rem]">
-                    {milestone.year}
-                  </p>
-                  <p className="mt-2 max-w-[52ch] text-pretty text-base leading-[1.7] text-foreground/85">
-                    {milestone.label}
-                  </p>
-                </li>
-              ))}
-            </m.ol>
           </m.div>
         </section>
       </MotionConfig>
