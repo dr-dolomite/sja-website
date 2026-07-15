@@ -7,7 +7,6 @@ import { AboutStory } from "@/components/about/about-story";
 import { AboutSeal } from "@/components/about/about-seal";
 import { AboutGovernance } from "@/components/about/about-governance";
 import { AboutPhilosophyGoals } from "@/components/about/about-philosophy-goals";
-import { AboutAffiliations } from "@/components/about/about-affiliations";
 import { AboutCta } from "@/components/about/about-cta";
 
 export const metadata: Metadata = {
@@ -33,7 +32,6 @@ export default function AboutPage() {
         <AboutSeal />
         <AboutGovernance />
         <AboutPhilosophyGoals />
-        <AboutAffiliations />
         <AboutCta />
       </main>
       <SiteFooter />

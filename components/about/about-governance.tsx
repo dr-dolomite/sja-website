@@ -74,10 +74,10 @@ export function AboutGovernance() {
               Identity &amp; Governance
             </m.p>
 
-            <div className="mt-10 grid grid-cols-1 gap-x-16 gap-y-14 sm:mt-14 lg:grid-cols-12">
+            <div className="mt-10 grid grid-cols-1 items-center gap-x-16 gap-y-12 sm:mt-14 lg:grid-cols-12">
               {/* Prose column: headline + the two carrying sentences. Kept to
                  a readable measure, not a diagram. */}
-              <div className="flex flex-col gap-6 lg:col-span-8">
+              <div className="flex flex-col gap-6 lg:col-span-7">
                 <h2 className="max-w-[20ch] text-balance font-serif text-[clamp(2.25rem,4.8vw,3.5rem)] leading-[1.08] tracking-[-0.005em] text-grove-deep">
                   A diocesan school under the Diocese of Kalibo.
                 </h2>
@@ -91,35 +91,96 @@ export function AboutGovernance() {
 
                 <p className="max-w-[62ch] text-pretty text-lg leading-[1.7] text-muted-foreground">
                   Authority flows from the Diocesan Bishop through the
-                  School Director, currently{" "}
-                  <span className="font-medium text-foreground">
-                    Rev. Fr. Mark Randy G. Beluso, S.Th.L., MA, MALS
-                  </span>
-                  , to the Principal, who exercises academic and operational
-                  leadership over faculty, staff, and learners.
+                  School Director to the Principal, who exercises academic
+                  and operational leadership over faculty, staff, and
+                  learners.
                 </p>
               </div>
 
-              {/* The School Director's portrait leads (Community over
-                 corporate: a real face carries the governance section), with
-                 his name and title as the caption. The Diocese of Kalibo coat
-                 of arms sits beneath as the smaller diocesan-identity mark.
-                 Meaning-bearing text stays ink, not gold, on this light
-                 ground; the gold rings are decorative linework only. */}
+              {/* The Diocese of Kalibo coat of arms, given a proper, dignified
+                 position opposite the headline that names it, rather than a
+                 small footnote beneath a portrait. Meaning-bearing text stays
+                 ink, not gold, on this light ground; the gold ring is
+                 decorative linework only. */}
               <m.div
                 variants={itemVariants}
-                className="flex flex-col items-start gap-6 lg:col-span-4 lg:items-center lg:justify-self-center"
+                className="lg:col-span-5 lg:justify-self-center"
               >
-                <figure className="w-full max-w-[19rem]">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border shadow-sm">
+                <div className="flex flex-col items-center gap-5 text-center">
+                  <div className="relative rounded-2xl border border-border bg-background p-8 shadow-sm">
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-3 rounded-xl border border-secondary/30"
+                    />
+                    <Image
+                      src="/images/diocese-of-kalibo-coat-of-arms.webp"
+                      alt="Coat of arms of the Diocese of Kalibo"
+                      width={176}
+                      height={176}
+                      className="relative h-32 w-32 object-contain sm:h-40 sm:w-40"
+                    />
+                  </div>
+                  <div>
+                    <p className="font-serif text-2xl leading-tight text-grove-deep">
+                      Diocese of Kalibo
+                    </p>
+                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-muted-foreground">
+                      The school&rsquo;s governing diocese
+                    </p>
+                  </div>
+                </div>
+              </m.div>
+            </div>
+
+            {/* Leadership chain: the two people named in the authority flow,
+               the Diocesan Bishop and the School Director, shown as real faces
+               in that order. Community over corporate: the governance section
+               is carried by people, not an org chart. */}
+            <div className="mt-16 sm:mt-24">
+              <m.p
+                variants={itemVariants}
+                className="text-center text-[13px] font-semibold uppercase tracking-[0.22em] text-primary"
+              >
+                Leadership
+              </m.p>
+
+              <m.div
+                variants={itemVariants}
+                className="mx-auto mt-10 grid max-w-3xl grid-cols-1 gap-10 sm:grid-cols-2"
+              >
+                <figure className="flex flex-col">
+                  <div className="relative aspect-square overflow-hidden rounded-2xl border border-border shadow-sm">
+                    <Image
+                      src="/bishop-cyril.webp"
+                      alt="Most Reverend Cyril Jojo Buhayan Villareal, Bishop of the Diocese of Kalibo"
+                      fill
+                      sizes="(max-width: 640px) 90vw, 22rem"
+                      className="object-cover object-center"
+                    />
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-3 rounded-xl border border-secondary/30"
+                    />
+                  </div>
+                  <figcaption className="mt-4 text-center">
+                    <p className="text-sm font-medium text-foreground">
+                      Most Rev. Cyril &ldquo;Jojo&rdquo; Buhayan Villareal
+                    </p>
+                    <p className="mt-1 text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                      Bishop of Kalibo
+                    </p>
+                  </figcaption>
+                </figure>
+
+                <figure className="flex flex-col">
+                  <div className="relative aspect-square overflow-hidden rounded-2xl border border-border shadow-sm">
                     <Image
                       src="/school-director.jpg"
                       alt="Rev. Fr. Mark Randy G. Beluso, School Director of St. Joseph's Academy of Malinao"
                       fill
-                      sizes="(max-width: 1024px) 80vw, 19rem"
+                      sizes="(max-width: 640px) 90vw, 22rem"
                       className="object-cover object-top"
                     />
-                    {/* Thin gold ring, decorative framing only. */}
                     <div
                       aria-hidden="true"
                       className="pointer-events-none absolute inset-3 rounded-xl border border-secondary/30"
@@ -134,19 +195,6 @@ export function AboutGovernance() {
                     </p>
                   </figcaption>
                 </figure>
-
-                <div className="flex items-center gap-3">
-                  <Image
-                    src="/images/diocese-of-kalibo-coat-of-arms.webp"
-                    alt="Coat of arms of the Diocese of Kalibo"
-                    width={48}
-                    height={48}
-                    className="h-12 w-12 object-contain"
-                  />
-                  <p className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                    Diocese of Kalibo
-                  </p>
-                </div>
               </m.div>
             </div>
           </m.div>
