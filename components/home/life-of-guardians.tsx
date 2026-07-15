@@ -135,7 +135,7 @@ export function LifeOfGuardians() {
                 className="max-w-[60ch] text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
               >
                 From Grade 7 to Grade 12, Guardians follow the MATATAG and
-                Strengthened Senior High curriculum, choosing the STEM, ASH,
+                Strengthened Senior High curriculum, choosing the STEM, ASSH,
                 or BE track that fits where they are headed, in classes small
                 enough that a teacher still learns every name.
               </m.p>
