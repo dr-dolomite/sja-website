@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { AboutIntro } from "@/components/about/about-intro";
+import { AboutVisionMission } from "@/components/about/about-vision-mission";
+import { AboutStory } from "@/components/about/about-story";
+import { AboutSeal } from "@/components/about/about-seal";
+import { AboutGovernance } from "@/components/about/about-governance";
+import { AboutPhilosophyGoals } from "@/components/about/about-philosophy-goals";
+import { AboutAffiliations } from "@/components/about/about-affiliations";
+import { AboutCta } from "@/components/about/about-cta";
 
 export const metadata: Metadata = {
   title: "About | St. Joseph's Academy of Malinao",
@@ -19,7 +27,14 @@ export default function AboutPage() {
       </a>
       <SiteHeader />
       <main id="main-content" className="flex flex-1 flex-col">
-        {/* sections wired in during integration (Task 10) */}
+        <AboutIntro />
+        <AboutVisionMission />
+        <AboutStory />
+        <AboutSeal />
+        <AboutGovernance />
+        <AboutPhilosophyGoals />
+        <AboutAffiliations />
+        <AboutCta />
       </main>
       <SiteFooter />
     </>
