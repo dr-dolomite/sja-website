@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { AcademicsIntro } from "@/components/academics/academics-intro";
+import { AcademicsJhs } from "@/components/academics/academics-jhs";
 
 export const metadata: Metadata = {
   title: "Academics | St. Joseph's Academy of Malinao",
@@ -21,6 +22,7 @@ export default function AcademicsPage() {
       <SiteHeader />
       <main id="main-content" className="flex flex-1 flex-col">
         <AcademicsIntro />
+        <AcademicsJhs />
       </main>
       <SiteFooter />
     </>
