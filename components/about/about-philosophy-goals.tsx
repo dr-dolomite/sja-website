@@ -124,6 +124,13 @@ export function AboutPhilosophyGoals() {
               Philosophy &amp; Goals
             </m.p>
 
+            {/* Visually-hidden section heading so the six goal titles (h3)
+               nest under a proper h2 in the screen-reader heading outline
+               instead of hanging off the previous section's h2. The section's
+               visual design intentionally leads with the eyebrow, so this
+               heading is sr-only, not a visible headline. */}
+            <h2 className="sr-only">Our Philosophy and Goals</h2>
+
             {/* Philosophy + Institutional Goal, framed as a cited
                institutional statement at a RESTRAINED, roughly large-body
                scale, deliberately NOT the giant monumentalized serif
