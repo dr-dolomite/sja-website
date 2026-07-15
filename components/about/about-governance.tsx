@@ -152,7 +152,7 @@ export function AboutGovernance() {
                   <div className="relative aspect-square overflow-hidden rounded-2xl border border-border shadow-sm">
                     <Image
                       src="/bishop-cyril.webp"
-                      alt="Most Reverend Cyril Jojo Buhayan Villareal, Bishop of the Diocese of Kalibo"
+                      alt="Most Rev. Cyril B. Villareal, D.D., Bishop of the Diocese of Kalibo"
                       fill
                       sizes="(max-width: 640px) 90vw, 22rem"
                       className="object-cover object-center"
@@ -164,7 +164,7 @@ export function AboutGovernance() {
                   </div>
                   <figcaption className="mt-4 text-center">
                     <p className="text-sm font-medium text-foreground">
-                      Most Rev. Cyril &ldquo;Jojo&rdquo; Buhayan Villareal
+                      Most Rev. Cyril B. Villareal, D.D.
                     </p>
                     <p className="mt-1 text-xs uppercase tracking-[0.15em] text-muted-foreground">
                       Bishop of Kalibo
