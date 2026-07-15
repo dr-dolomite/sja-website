@@ -4,3 +4,8 @@ allowBuilds:
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
+# Security: pin postcss to a patched version (GHSA-qx2v-qp2m-jg93, < 8.5.10).
+# Build-time-only advisory pulled transitively via next; overrides live here
+# in pnpm 11+ (the package.json "pnpm.overrides" field is no longer read).
+overrides:
+  postcss: '>=8.5.10'

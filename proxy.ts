@@ -36,6 +36,19 @@ function isGated(): boolean {
   );
 }
 
+// Edge-safe, pure-JS constant-time string compare (no node:crypto on the Edge
+// runtime). Length is compared first (a minor length leak that is acceptable
+// for this temporary gate); the body XOR-accumulates so the loop cannot
+// short-circuit on the first differing character.
+function safeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i++) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return mismatch === 0;
+}
+
 export function proxy(req: NextRequest) {
   if (!isGated()) return NextResponse.next();
 
@@ -50,7 +63,7 @@ export function proxy(req: NextRequest) {
     const clean = url.clone();
     clean.searchParams.delete("preview");
     const res = NextResponse.redirect(clean);
-    if (preview === token) {
+    if (safeEqual(preview, token)) {
       res.cookies.set(BYPASS_COOKIE, token, {
         httpOnly: true,
         sameSite: "lax",
@@ -65,7 +78,8 @@ export function proxy(req: NextRequest) {
   }
 
   // ── Valid bypass cookie: let the team through to the real WIP site ──────
-  if (token && req.cookies.get(BYPASS_COOKIE)?.value === token) {
+  const cookieVal = req.cookies.get(BYPASS_COOKIE)?.value;
+  if (token && cookieVal !== undefined && safeEqual(cookieVal, token)) {
     return NextResponse.next();
   }
 

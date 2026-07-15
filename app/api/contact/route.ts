@@ -23,19 +23,27 @@ type TurnstileVerifyResult = {
   "error-codes"?: string[];
 };
 
+type TurnstileResult = "ok" | "failed" | "misconfigured";
+
 async function verifyTurnstile(
   token: string | undefined,
   remoteip: string | undefined
-): Promise<boolean> {
+): Promise<TurnstileResult> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
   if (!secret) {
-    // No secret configured: skip verification so local dev without keys
-    // still works. Never disable this silently in production.
+    // No secret configured. In production this is a misconfiguration and we
+    // fail closed; in local dev without keys we skip so submissions still work.
+    if (process.env.NODE_ENV === "production") {
+      console.error(
+        "TURNSTILE_SECRET_KEY not set in production; failing captcha closed."
+      );
+      return "misconfigured";
+    }
     console.warn("TURNSTILE_SECRET_KEY not set; skipping captcha verification.");
-    return true;
+    return "ok";
   }
   if (!token) {
-    return false;
+    return "failed";
   }
 
   const controller = new AbortController();
@@ -51,9 +59,9 @@ async function verifyTurnstile(
       }
     );
     const data = (await response.json()) as TurnstileVerifyResult;
-    return Boolean(data.success);
+    return data.success ? "ok" : "failed";
   } catch {
-    return false;
+    return "failed";
   } finally {
     clearTimeout(timeout);
   }
@@ -113,11 +121,14 @@ export async function POST(request: Request) {
       .get("x-forwarded-for")
       ?.split(",")[0]
       ?.trim();
-    const turnstileOk = await verifyTurnstile(
+    const turnstileResult = await verifyTurnstile(
       typeof turnstileToken === "string" ? turnstileToken : undefined,
       remoteip
     );
-    if (!turnstileOk) {
+    if (turnstileResult === "misconfigured") {
+      return Response.json({ success: false, error: "config" }, { status: 500 });
+    }
+    if (turnstileResult === "failed") {
       return Response.json({ success: false, error: "captcha" }, { status: 403 });
     }
 
