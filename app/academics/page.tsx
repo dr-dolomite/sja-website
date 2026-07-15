@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { AcademicsIntro } from "@/components/academics/academics-intro";
 import { AcademicsJhs } from "@/components/academics/academics-jhs";
+import { AcademicsShs } from "@/components/academics/academics-shs";
 
 export const metadata: Metadata = {
   title: "Academics | St. Joseph's Academy of Malinao",
@@ -23,6 +24,7 @@ export default function AcademicsPage() {
       <main id="main-content" className="flex flex-1 flex-col">
         <AcademicsIntro />
         <AcademicsJhs />
+        <AcademicsShs />
       </main>
       <SiteFooter />
     </>
