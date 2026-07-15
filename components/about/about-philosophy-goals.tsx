@@ -145,19 +145,19 @@ export function AboutPhilosophyGoals() {
                 Our Philosophy
               </p>
               {/*
-                PLACEHOLDER-PENDING: this is the school's current official
-                Philosophy string, reproduced verbatim. It is grammatically
-                broken ("...growth and transformational education that is
-                Christ-centered formation process...") and is pending a
-                corrected version from the school before launch. Do not
-                paraphrase or silently fix it; only replace it with a
-                school-approved rewrite.
+                PLACEHOLDER-PENDING: interim, grammar-only rewrite of the
+                school's official Philosophy string. The original was
+                grammatically broken ("...growth and transformational
+                education that is Christ-centered formation process..."); this
+                preserves its meaning and vocabulary but is NOT yet the
+                school-approved wording. Replace it with the official text
+                before launch.
               */}
               <p className="mt-3 text-pretty font-serif text-2xl leading-[1.4] text-grove-foreground">
-                Every learner is capable of growth and transformational
-                education that is Christ-centered formation process,
-                nurturing the whole learner toward truth, excellence, and
-                responsible service to the Church and society.
+                Every learner is capable of growth through a transformational,
+                Christ-centered formation process that nurtures the whole
+                learner toward truth, excellence, and responsible service to
+                the Church and society.
               </p>
 
               <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.2em] text-grove-foreground/70">
