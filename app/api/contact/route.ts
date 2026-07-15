@@ -1,9 +1,33 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import { siteConfig } from "@/lib/site-config";
 
 export const runtime = "nodejs";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Transactional email is sent through the school's own Google Workspace over
+// authenticated SMTP (no third-party sending service). Because the notification
+// goes school -> school (from a Workspace mailbox to info@/registrar@), it is
+// DKIM/SPF-aligned on the root domain and delivered internally. The transporter
+// is null until SMTP_USER + SMTP_PASS are configured, so a missing config
+// returns a clean "config" error rather than throwing at module load.
+const SMTP_HOST = process.env.SMTP_HOST || "smtp.gmail.com";
+const SMTP_PORT = Number(process.env.SMTP_PORT) || 465;
+const SMTP_USER = process.env.SMTP_USER;
+const SMTP_PASS = process.env.SMTP_PASS;
+
+const mailer =
+  SMTP_USER && SMTP_PASS
+    ? nodemailer.createTransport({
+        host: SMTP_HOST,
+        // 465 = implicit TLS; 587 = STARTTLS.
+        port: SMTP_PORT,
+        secure: SMTP_PORT === 465,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+        // Keep a slow/blocked SMTP dialogue from hanging the serverless function.
+        connectionTimeout: 10_000,
+        greetingTimeout: 10_000,
+        socketTimeout: 15_000,
+      })
+    : null;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const INQUIRY_TYPES = ["Admissions", "General inquiry", "Other"] as const;
@@ -132,10 +156,6 @@ export async function POST(request: Request) {
       return Response.json({ success: false, error: "captcha" }, { status: 403 });
     }
 
-    if (!process.env.RESEND_API_KEY) {
-      return Response.json({ success: false, error: "config" }, { status: 500 });
-    }
-
     const isAdmissions = inquiryType === "Admissions";
     const recipient = isAdmissions
       ? siteConfig.email.admissions.display
@@ -144,12 +164,13 @@ export async function POST(request: Request) {
       ? "New Admissions inquiry, St. Joseph's Academy"
       : "New contact form message, St. Joseph's Academy";
 
-    const from =
-      process.env.CONTACT_FROM_EMAIL ??
-      "St. Joseph's Academy <contact@send.sjamalinao.edu.ph>";
+    // From is the authenticated mailbox: Google rewrites the From header to the
+    // SMTP user unless it is a verified send-as alias, so only the display name
+    // is configurable; the address is always SMTP_USER. Families never see it
+    // (replyTo routes replies straight to the visitor).
+    const fromName = process.env.CONTACT_FROM_NAME || "St. Joseph's Academy";
     const archive = process.env.CONTACT_ARCHIVE_EMAIL;
-    const bcc =
-      archive && archive !== recipient ? [archive] : undefined;
+    const bcc = archive && archive !== recipient ? archive : undefined;
 
     const phoneDisplay = phoneValue || "Not provided";
 
@@ -174,18 +195,32 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    const { error } = await resend.emails.send({
-      from,
-      to: [recipient],
-      bcc,
-      replyTo: emailValue,
-      subject,
-      text,
-      html,
-    });
+    // Dev without SMTP creds: log and succeed so local form testing works.
+    // Production must be configured; a missing transporter is a misconfiguration
+    // and fails closed with a "config" error, never a silent drop.
+    if (!mailer || !SMTP_USER) {
+      if (process.env.NODE_ENV === "production") {
+        console.error("SMTP not configured in production; cannot send contact email.");
+        return Response.json({ success: false, error: "config" }, { status: 500 });
+      }
+      console.warn(
+        `SMTP not configured; skipping send (dev only). Would send:\n${text}`
+      );
+      return Response.json({ success: true }, { status: 200 });
+    }
 
-    if (error) {
-      console.error("Resend send failed:", error);
+    try {
+      await mailer.sendMail({
+        from: { name: fromName, address: SMTP_USER },
+        to: recipient,
+        bcc,
+        replyTo: emailValue,
+        subject,
+        text,
+        html,
+      });
+    } catch (err) {
+      console.error("SMTP send failed:", err);
       return Response.json({ success: false, error: "send" }, { status: 502 });
     }
 

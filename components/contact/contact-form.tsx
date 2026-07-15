@@ -26,8 +26,9 @@ import {
 } from "@/components/ui/select";
 import { siteConfig } from "@/lib/site-config";
 
-// The form now posts to our own /api/contact route, which sends via Resend
-// and, when configured, verifies a Cloudflare Turnstile token server-side.
+// The form posts to our own /api/contact route, which sends the notification
+// through the school's Google Workspace over SMTP and, when configured,
+// verifies a Cloudflare Turnstile token server-side.
 // The site key below is public by design (Turnstile's client widget requires
 // it); the matching secret key lives only on the server.
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;

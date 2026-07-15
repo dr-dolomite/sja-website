@@ -8,12 +8,13 @@ wired through a single DNS control plane (Cloudflare).
 
 The domain `sjamalinao.edu.ph` is **registered through PHNET** but has its
 **DNS delegated to Cloudflare** (Cloudflare is the authoritative nameserver).
-Cloudflare then directs traffic to four places: the **website** is hosted on
+Cloudflare then directs traffic to three places: the **website** is hosted on
 **Vercel**, the school's **mailboxes** (`info@`, `registrar@`) live in **Google
-Workspace** (Education edition), the contact form sends **transactional email**
-through **Resend** on a dedicated `send.` subdomain, and bot protection on that
-form is handled by **Cloudflare Turnstile**. Nothing talks to the registrar
-(PHNET) day to day; all record changes happen in Cloudflare.
+Workspace** (Education edition), and bot protection on the contact form is
+handled by **Cloudflare Turnstile**. The contact form sends its notification
+through that same **Google Workspace** over authenticated SMTP (no separate
+sending service). Nothing talks to the registrar (PHNET) day to day; all record
+changes happen in Cloudflare.
 
 ## Service map
 
@@ -27,19 +28,19 @@ form is handled by **Cloudflare Turnstile**. Nothing talks to the registrar
                     │   Cloudflare (DNS control)   │
                     │   authoritative nameserver   │
                     └────────────────────────────┘
-             ┌───────────────┬───────────────┬───────────────┐
-             │               │               │               │
-   CNAME @ / www        MX + TXT         send.sjamalinao   challenges.
-   (DNS-only)           (SPF/DKIM/       .edu.ph           cloudflare.com
-             │           DMARC)          MX + TXT               │
-             ▼               ▼               ▼                  ▼
-        ┌─────────┐   ┌──────────────┐  ┌──────────┐    ┌──────────────┐
-        │ Vercel  │   │ Google        │  │ Resend    │    │ Turnstile     │
-        │ (host)  │   │ Workspace     │  │ (form mail │    │ (bot verify)  │
-        │         │   │ (mailboxes)   │  │  only)    │    │               │
-        └─────────┘   └──────────────┘  └──────────┘    └──────────────┘
-        Next.js 16    info@, registrar@  contact@send.…   siteverify on
-        React 19 app  human inboxes      -> staff inbox    /api/contact
+             ┌───────────────────┬───────────────────┐
+             │                   │                   │
+   CNAME @ / www            MX + TXT            challenges.
+   (DNS-only)               (SPF/DKIM/DMARC)    cloudflare.com
+             │                   │                   │
+             ▼                   ▼                   ▼
+        ┌─────────┐     ┌──────────────────┐   ┌──────────────┐
+        │ Vercel  │     │ Google Workspace  │   │ Turnstile     │
+        │ (host)  │     │ mailboxes + SMTP  │   │ (bot verify)  │
+        │         │     │ send for the form │   │               │
+        └─────────┘     └──────────────────┘   └──────────────┘
+        Next.js 16      info@, registrar@       siteverify on
+        React 19 app    + web@ sends via SMTP   /api/contact
 ```
 
 ## Roles, one by one
@@ -86,31 +87,37 @@ form is handled by **Cloudflare Turnstile**. Nothing talks to the registrar
   **SPF / DKIM / DMARC** TXT records for the root domain so Workspace mail sends
   and receives normally.
 
-### Transactional email — Resend
-- The `/contact` form does **not** send from Workspace. `app/api/contact/route.ts`
-  sends through **Resend** so form submissions are delivered reliably as
-  transactional mail.
-- Sender identity lives on a dedicated subdomain: **`send.sjamalinao.edu.ph`**,
-  verified in Resend. The From is `contact@send.sjamalinao.edu.ph`.
-  - **Why a subdomain:** it isolates automated form-mail sending reputation from
-    the school's human Workspace mail, and eases Google's self-domain spam
-    heuristic (mail "from" the school arriving at the school's own inbox).
-  - Families never see this address — the staff notification goes to `info@` or
-    `registrar@`, and `replyTo` is set to the visitor's own email so a reply
-    reaches the family directly.
+### Transactional email — Google Workspace SMTP
+- The `/contact` form sends its notification through the school's **own Google
+  Workspace** over authenticated SMTP (`app/api/contact/route.ts` uses
+  Nodemailer against `smtp.gmail.com`). No separate sending service: the mail
+  goes school → school, so it is DKIM/SPF-aligned on the root domain and
+  delivered internally.
+- **Sender mailbox:** a dedicated, low-privilege Workspace account (e.g.
+  `web@sjamalinao.edu.ph`) authenticated with a **Google App Password**. Google
+  rewrites the From header to this authenticated mailbox, so the code sets the
+  From address to `SMTP_USER` and only the display name is configurable
+  (`CONTACT_FROM_NAME`). Families never see it: `replyTo` is the visitor's own
+  email, so a reply reaches the family directly.
 - Delivery routing in the route handler:
   - Inquiry type **Admissions** → `registrar@sjamalinao.edu.ph`
   - Everything else → `info@sjamalinao.edu.ph`
   - Optional BCC archive (`CONTACT_ARCHIVE_EMAIL`) so no inquiry is lost.
-- DNS impact: Cloudflare carries Resend's verification records (SPF/DKIM, and a
-  return-path MX) **scoped to the `send.` subdomain** — separate from the
-  Workspace records on the root domain, so the two mail systems don't collide.
+- **Trade-off (deliberate):** this folds form-mail into the human-mail tenant
+  rather than isolating it on a separate service, and the App Password is a
+  broader credential than a send-scoped API key. Both are accepted consciously
+  in exchange for removing the third-party dependency and its send quota; the
+  dedicated low-privilege mailbox bounds the blast radius. Sending volume is a
+  handful of messages a day, well within Workspace limits (~2,000/day).
+- DNS impact: none beyond the Workspace **MX + SPF/DKIM/DMARC** records the root
+  domain already carries. (Any leftover Resend `send.` subdomain records are now
+  unused and can be removed.)
 
 ### Bot protection — Cloudflare Turnstile
 - The contact form is guarded by **Turnstile**. The client renders the widget
   (`NEXT_PUBLIC_TURNSTILE_SITE_KEY`); the route verifies the token server-side
   against `challenges.cloudflare.com/turnstile/v0/siteverify` using
-  `TURNSTILE_SECRET_KEY` before it will call Resend.
+  `TURNSTILE_SECRET_KEY` before it will send the email.
 - A honeypot field (`botcheck`) provides a second, silent layer.
 
 ## Application layer (Vercel-hosted)
@@ -119,7 +126,7 @@ form is handled by **Cloudflare Turnstile**. Nothing talks to the registrar
   Vercel. pnpm is the package manager.
 - **Contact pipeline:** `components/contact/contact-form.tsx` (client) →
   `POST /api/contact` (`app/api/contact/route.ts`, Node runtime) → Turnstile
-  verify → Resend send → Workspace inbox.
+  verify → Workspace SMTP send → Workspace inbox.
 - **Coming-Soon gate:** `proxy.ts` (Next 16 proxy/middleware convention)
   fail-closed gates the whole site behind `/coming-soon` until `COMING_SOON` is
   explicitly set to `false` in Vercel. Full runbook in `docs/coming-soon.md`.
@@ -133,9 +140,12 @@ Read `.env.example` for the authoritative descriptions. Summary:
 
 | Variable | Service | Purpose |
 | --- | --- | --- |
-| `RESEND_API_KEY` | Resend | Server-side send auth for the contact form. |
-| `CONTACT_FROM_EMAIL` | Resend | Verified From on `send.sjamalinao.edu.ph`. |
-| `CONTACT_ARCHIVE_EMAIL` | Resend | Optional BCC archive inbox. |
+| `SMTP_HOST` | Workspace | SMTP host (default `smtp.gmail.com`). |
+| `SMTP_PORT` | Workspace | SMTP port (default `465`, implicit TLS). |
+| `SMTP_USER` | Workspace | Dedicated sender mailbox, e.g. `web@sjamalinao.edu.ph`. |
+| `SMTP_PASS` | Workspace | Google App Password for that mailbox. |
+| `CONTACT_FROM_NAME` | Workspace | Display name on the From (address is `SMTP_USER`). |
+| `CONTACT_ARCHIVE_EMAIL` | Workspace | Optional BCC archive inbox. |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Turnstile | Public client widget key. |
 | `TURNSTILE_SECRET_KEY` | Turnstile | Server-side token verification. |
 | `COMING_SOON` | Vercel | Launch switch; `false` lifts the gate. |
@@ -143,11 +153,15 @@ Read `.env.example` for the authoritative descriptions. Summary:
 
 ## Why the split matters (design intent)
 
-- **One domain, four independent failure domains.** The website going down
-  doesn't affect mail; a Resend outage doesn't affect Workspace inboxes;
-  rotating a Turnstile key touches nothing else.
-- **Reputation isolation.** Automated form mail (Resend, `send.` subdomain) and
-  human mail (Workspace, root domain) never share a sending reputation.
+- **One domain, mostly independent failure domains.** The website going down
+  doesn't affect mail; rotating a Turnstile key touches nothing else. The form's
+  notification now rides on Workspace itself, so it shares fate with the school
+  mailboxes (a conscious trade for dropping the third-party sender).
+- **Deliverability via alignment, not isolation.** Form mail is sent, DKIM/SPF
+  signed, and received all within the school's own Workspace tenant, so it lands
+  internally without an external sender's reputation to warm. The earlier
+  `send.` subdomain isolation was retired with Resend; see the Transactional
+  email section for the trade-off.
 - **Cloudflare as the single DNS choke point.** Because PHNET delegates to
   Cloudflare, every change — a new record, a mail migration, a host swap — is
   made in one place, with one caveat that recurs everywhere in this doc: the
@@ -160,4 +174,4 @@ Read `.env.example` for the authoritative descriptions. Summary:
   Cloudflare) DNS runbook.
 - `.env.example` — every environment variable, described in place.
 - `lib/site-config.ts` — the school's confirmed public contact facts.
-- `app/api/contact/route.ts` — the Turnstile → Resend request path.
+- `app/api/contact/route.ts` — the Turnstile → Workspace SMTP request path.
