@@ -123,7 +123,7 @@ export function AcademicsCta() {
               {/* Secondary link stays a plain text link, never a second
                  button, so the single-CTA emphasis holds. */}
               <Link
-                href="/admissions"
+                href="/#admissions"
                 className="text-[15px] font-semibold text-grove-foreground underline decoration-secondary/70 decoration-[1.5px] underline-offset-[6px] transition-colors hover:decoration-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grove-foreground/70 focus-visible:ring-offset-2 focus-visible:ring-offset-grove-deep"
               >
                 See admission requirements
