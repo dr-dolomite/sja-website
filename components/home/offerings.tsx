@@ -31,10 +31,12 @@ const itemVariants: Variants = {
   },
 };
 
-// PLACEHOLDER: the BE and ASH acronym expansions and all three cluster
-// descriptions are brand-voiced drafts pending official school wording (same
-// status as core-values / life-of-guardians copy). STEM, the three clusters,
-// MATATAG, and the Strengthened SHS framing are final.
+// PLACEHOLDER: STEM/ASSH/BE are the confirmed official cluster codes, but the
+// ASSH and BE full-word expansions are not yet officially confirmed by the
+// school (same pending status as the Offerings registry on
+// components/academics/academics-shs.tsx). Only STEM's expansion is safe to
+// spell out; ASSH and BE get a brand-voiced audience line instead of an
+// invented official name.
 const CLUSTERS = [
   {
     number: "01",
@@ -46,13 +48,13 @@ const CLUSTERS = [
     number: "02",
     name: "BE",
     description:
-      "Business and Entrepreneurship. For the builders and leaders who will run and grow enterprises of their own.",
+      "For the builders and leaders who will run and grow enterprises of their own.",
   },
   {
     number: "03",
-    name: "ASH",
+    name: "ASSH",
     description:
-      "Arts, Sciences, and Humanities. For the storytellers, public servants, and lifelong questioners.",
+      "For the storytellers, public servants, and lifelong questioners.",
   },
 ] as const;
 
