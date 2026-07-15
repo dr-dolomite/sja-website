@@ -126,7 +126,7 @@ export function SiteFooter() {
                      target/rel: a mailto: link isn't a same-tab navigation
                      risk the way an external social profile is. */}
                   <a
-                    href={siteConfig.email.href}
+                    href={siteConfig.email.general.href}
                     aria-label={`Email ${siteConfig.shortName}`}
                     className="flex size-10 items-center justify-center rounded-full bg-grove-foreground/10 text-grove-foreground transition-colors hover:bg-grove-foreground/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grove-foreground/70"
                   >
@@ -198,14 +198,14 @@ export function SiteFooter() {
                     {siteConfig.phone.display}
                   </a>
                   <a
-                    href={siteConfig.email.href}
+                    href={siteConfig.email.general.href}
                     className="flex items-center gap-3 [overflow-wrap:anywhere] text-grove-foreground/80 transition-colors hover:text-grove-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grove-foreground/70"
                   >
                     <Mail
                       aria-hidden="true"
                       className="size-4 shrink-0 text-grove-foreground/60"
                     />
-                    {siteConfig.email.display}
+                    {siteConfig.email.general.display}
                   </a>
                 </address>
               </m.div>

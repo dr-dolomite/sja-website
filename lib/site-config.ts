@@ -2,6 +2,9 @@
 // facts. The footer and the /contact page both read from here so there is one
 // place to keep these correct. Address, office hours, phone, and email are
 // all the school's real, confirmed details.
+//
+// Email is two confirmed edu.ph domain inboxes, not the old shared Gmail:
+// general@ for everyday questions, registrar@ for admissions inquiries.
 
 export type NavLink = { href: string; label: string };
 export type SocialLink = { key: string; label: string; href: string };
@@ -34,8 +37,16 @@ export const siteConfig = {
   },
 
   email: {
-    display: "sjamalinao@gmail.com",
-    href: "mailto:sjamalinao@gmail.com",
+    general: {
+      label: "General inquiries",
+      display: "info@sjamalinao.edu.ph",
+      href: "mailto:info@sjamalinao.edu.ph",
+    },
+    admissions: {
+      label: "Admissions",
+      display: "registrar@sjamalinao.edu.ph",
+      href: "mailto:registrar@sjamalinao.edu.ph",
+    },
   },
 
   officeHours: [

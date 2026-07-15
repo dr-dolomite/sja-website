@@ -151,18 +151,38 @@ export function Contact() {
                     </a>
                   </m.div>
 
-                  {/* Email */}
+                  {/* Email: two labeled inboxes (general vs. admissions), not
+                     one address, since Web3Forms routes each to a different
+                     school inbox. Sub-labels are plain UI text, not gold. */}
                   <m.div variants={itemVariants} className="flex flex-col gap-2">
                     <p className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.18em] text-primary">
                       <Mail aria-hidden="true" className="size-4 text-primary" />
                       Email
                     </p>
-                    <a
-                      href={siteConfig.email.href}
-                      className="text-[15.5px] leading-relaxed [overflow-wrap:anywhere] text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      {siteConfig.email.display}
-                    </a>
+                    <div className="flex flex-col gap-2">
+                      <span className="flex flex-col gap-0.5">
+                        <span className="text-[13px] text-muted-foreground">
+                          {siteConfig.email.general.label}
+                        </span>
+                        <a
+                          href={siteConfig.email.general.href}
+                          className="text-[15.5px] leading-relaxed [overflow-wrap:anywhere] text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          {siteConfig.email.general.display}
+                        </a>
+                      </span>
+                      <span className="flex flex-col gap-0.5">
+                        <span className="text-[13px] text-muted-foreground">
+                          {siteConfig.email.admissions.label}
+                        </span>
+                        <a
+                          href={siteConfig.email.admissions.href}
+                          className="text-[15.5px] leading-relaxed [overflow-wrap:anywhere] text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          {siteConfig.email.admissions.display}
+                        </a>
+                      </span>
+                    </div>
                   </m.div>
                 </m.div>
               </m.div>

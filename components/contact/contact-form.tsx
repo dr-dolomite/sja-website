@@ -10,6 +10,7 @@ import {
 } from "react";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { m, type Variants } from "motion/react";
+import Script from "next/script";
 
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -25,13 +26,28 @@ import {
 } from "@/components/ui/select";
 import { siteConfig } from "@/lib/site-config";
 
-// Web3Forms' free plan only accepts submissions from the browser (it rejects
-// server-side/proxied requests outright), so the form posts to it directly and
-// the access key is necessarily public (NEXT_PUBLIC_). That browser-only rule
-// is itself a spam barrier (a scraped key can't be curl-spammed from a script),
-// and the account's "Allowed Domains" setting locks the key to our own domain.
-const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+// The form now posts to our own /api/contact route, which sends via Resend
+// and, when configured, verifies a Cloudflare Turnstile token server-side.
+// The site key below is public by design (Turnstile's client widget requires
+// it); the matching secret key lives only on the server.
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        el: HTMLElement,
+        options: {
+          sitekey: string;
+          callback: (token: string) => void;
+          "expired-callback"?: () => void;
+          "error-callback"?: () => void;
+        }
+      ) => string;
+      reset: (widgetId?: string) => void;
+    };
+  }
+}
 
 // Light validation, not a full RFC 5322 parser: with preventDefault + fetch
 // the browser never runs its own constraint validation UI, so this is the
@@ -126,6 +142,46 @@ export function ContactForm() {
 
   const successRef = useRef<HTMLDivElement>(null);
 
+  // Turnstile: rendered explicitly (not the implicit data-sitekey div) so we
+  // control exactly when it mounts and can reset it between submit attempts.
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileReady, setTurnstileReady] = useState(false);
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const turnstileWidgetIdRef = useRef<string | undefined>(undefined);
+  const turnstileRenderedRef = useRef(false);
+
+  // Fallback for the case where the Turnstile script was already cached and
+  // loaded (e.g. client-side navigation back to this page), so `onLoad`
+  // never fires again: poll briefly for `window.turnstile`.
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || turnstileReady) {
+      return;
+    }
+    const interval = setInterval(() => {
+      if (typeof window !== "undefined" && window.turnstile) {
+        setTurnstileReady(true);
+        clearInterval(interval);
+      }
+    }, 200);
+    return () => clearInterval(interval);
+  }, [turnstileReady]);
+
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY || !turnstileReady || turnstileRenderedRef.current) {
+      return;
+    }
+    if (!turnstileRef.current || !window.turnstile) {
+      return;
+    }
+    turnstileRenderedRef.current = true;
+    turnstileWidgetIdRef.current = window.turnstile.render(turnstileRef.current, {
+      sitekey: TURNSTILE_SITE_KEY,
+      callback: (token) => setTurnstileToken(token),
+      "expired-callback": () => setTurnstileToken(""),
+      "error-callback": () => setTurnstileToken(""),
+    });
+  }, [turnstileReady]);
+
   // Move focus to the confirmation panel and announce it, per the
   // aria-live contract below.
   useEffect(() => {
@@ -166,6 +222,10 @@ export function ContactForm() {
     setTouched({});
     setErrors({});
     setStatus("idle");
+    setTurnstileToken("");
+    if (window.turnstile) {
+      window.turnstile.reset(turnstileWidgetIdRef.current);
+    }
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -182,16 +242,18 @@ export function ContactForm() {
     }
 
     // Honeypot: a bot that filled the hidden field gets a silent, ordinary
-    // success with nothing actually sent. Web3Forms also drops `botcheck`
-    // server-side, but short-circuiting here avoids the round trip entirely.
+    // success with nothing actually sent. The server re-checks `botcheck`
+    // too, but short-circuiting here avoids the round trip entirely.
     if (honeypot) {
       setStatus("success");
       return;
     }
 
-    // No key configured (or still the placeholder) means the form cannot send;
-    // fall straight to the error state so the mailto fallback is offered.
-    if (!ACCESS_KEY || ACCESS_KEY === "your-web3forms-access-key") {
+    // If Turnstile is configured but hasn't handed us a token yet (widget
+    // still loading, or the visitor hasn't finished the challenge), don't
+    // submit; surface the error state so the mailto fallback is offered
+    // rather than silently failing server-side.
+    if (TURNSTILE_SITE_KEY && !turnstileToken) {
       setStatus("error");
       return;
     }
@@ -199,22 +261,19 @@ export function ContactForm() {
     isSubmittingRef.current = true;
     setStatus("submitting");
     try {
-      const response = await fetch(WEB3FORMS_ENDPOINT, {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: ACCESS_KEY,
-          subject: "New contact form message, St. Joseph's Academy",
-          from_name: name.trim(),
-          replyto: email.trim(),
           name: name.trim(),
           email: email.trim(),
           phone: phone.trim(),
-          inquiry_type: inquiryType,
+          inquiryType,
           message: message.trim(),
+          botcheck: honeypot,
+          turnstileToken,
         }),
       });
       const data: { success?: boolean } | null = await response
@@ -224,13 +283,17 @@ export function ContactForm() {
       if (response.ok && data?.success) {
         setStatus("success");
       } else {
-        // Any Web3Forms rejection surfaces the same inline error + mailto.
+        // Any server-side rejection surfaces the same inline error + mailto.
         setStatus("error");
       }
     } catch {
       setStatus("error");
     } finally {
       isSubmittingRef.current = false;
+      setTurnstileToken("");
+      if (window.turnstile) {
+        window.turnstile.reset(turnstileWidgetIdRef.current);
+      }
     }
   }
 
@@ -449,28 +512,51 @@ export function ContactForm() {
         )}
       </m.div>
 
+      {TURNSTILE_SITE_KEY && (
+        <>
+          <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            async
+            defer
+            onLoad={() => setTurnstileReady(true)}
+          />
+          {/* Cloudflare Turnstile: an unobtrusive bot check, usually invisible
+             in managed mode. No new palette colors or shadows; the widget
+             renders its own compact challenge UI only when needed. */}
+          <m.div variants={itemVariants} ref={turnstileRef} />
+        </>
+      )}
+
       <m.div variants={itemVariants} className="flex flex-col gap-4">
-        {status === "error" && (
-          // Functional error banner: a soft red that stays clearly off the
-          // green palette without shouting. red-700 text on red-50 clears AA
-          // with headroom (the raw --destructive token would not here), and
-          // the icon keeps it from relying on color alone.
-          <Alert className="items-start border-red-200 bg-red-50 text-red-700">
-            <AlertCircle aria-hidden="true" />
-            <AlertDescription className="text-[14px] leading-relaxed text-red-700">
-              {/* PLACEHOLDER: error copy, pending school sign-off. */}
-              Something went wrong sending your message. Please try again, or
-              email us directly at{" "}
-              <a
-                href={siteConfig.email.href}
-                className="font-semibold text-red-800 underline underline-offset-4 hover:text-red-900"
-              >
-                {siteConfig.email.display}
-              </a>
-              .
-            </AlertDescription>
-          </Alert>
-        )}
+        {status === "error" && (() => {
+          // Route the fallback mailto to the same inbox the form would have
+          // used, so admissions inquiries still land with the registrar.
+          const fallback =
+            inquiryType === "Admissions"
+              ? siteConfig.email.admissions
+              : siteConfig.email.general;
+          return (
+            // Functional error banner: a soft red that stays clearly off the
+            // green palette without shouting. red-700 text on red-50 clears AA
+            // with headroom (the raw --destructive token would not here), and
+            // the icon keeps it from relying on color alone.
+            <Alert className="items-start border-red-200 bg-red-50 text-red-700">
+              <AlertCircle aria-hidden="true" />
+              <AlertDescription className="text-[14px] leading-relaxed text-red-700">
+                {/* PLACEHOLDER: error copy, pending school sign-off. */}
+                Something went wrong sending your message. Please try again,
+                or email us directly at{" "}
+                <a
+                  href={fallback.href}
+                  className="font-semibold text-red-800 underline underline-offset-4 hover:text-red-900"
+                >
+                  {fallback.display}
+                </a>
+                .
+              </AlertDescription>
+            </Alert>
+          );
+        })()}
         <Button
           type="submit"
           disabled={status === "submitting"}
