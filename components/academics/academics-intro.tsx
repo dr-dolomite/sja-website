@@ -96,7 +96,7 @@ export function AcademicsIntro() {
               <div
                 className="relative aspect-[5/4] overflow-hidden border border-border bg-muted shadow-sm"
                 style={{
-                  borderRadius: "58% 42% 55% 45% / 52% 46% 54% 48%",
+                  borderRadius: "44% 38% 42% 40% / 40% 42% 42% 40%",
                 }}
               >
                 <Image
@@ -111,7 +111,7 @@ export function AcademicsIntro() {
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-3 border border-secondary/30"
                   style={{
-                    borderRadius: "58% 42% 55% 45% / 52% 46% 54% 48%",
+                    borderRadius: "44% 38% 42% 40% / 40% 42% 42% 40%",
                   }}
                 />
               </div>

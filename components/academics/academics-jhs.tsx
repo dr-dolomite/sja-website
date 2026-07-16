@@ -68,9 +68,9 @@ export function AcademicsJhs() {
               className="order-first lg:order-last lg:col-span-5"
             >
               <div
-                className="relative aspect-[5/4] overflow-hidden border border-border bg-background shadow-sm"
+                className="relative aspect-[4/5] overflow-hidden border border-border bg-background shadow-sm"
                 style={{
-                  borderRadius: "45% 55% 48% 52% / 55% 45% 58% 42%",
+                  borderRadius: "40% 44% 40% 42% / 42% 40% 44% 38%",
                 }}
               >
                 <Image
@@ -78,13 +78,13 @@ export function AcademicsJhs() {
                   alt="Junior High Guardians in a St. Joseph's Academy classroom, working through the MATATAG curriculum together"
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-3 border border-secondary/30"
                   style={{
-                    borderRadius: "45% 55% 48% 52% / 55% 45% 58% 42%",
+                    borderRadius: "40% 44% 40% 42% / 42% 40% 44% 38%",
                   }}
                 />
               </div>

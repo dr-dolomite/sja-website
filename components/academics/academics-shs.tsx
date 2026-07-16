@@ -184,9 +184,9 @@ export function AcademicsShs() {
             {/* Image column. */}
             <m.div variants={itemVariants} className="lg:col-span-5">
               <div
-                className="relative aspect-[5/4] overflow-hidden border border-grove-foreground/15 bg-grove-deep shadow-sm"
+                className="relative aspect-[4/5] overflow-hidden border border-grove-foreground/15 bg-grove-deep shadow-sm"
                 style={{
-                  borderRadius: "45% 55% 48% 52% / 55% 45% 58% 42%",
+                  borderRadius: "40% 44% 42% 40% / 44% 40% 40% 42%",
                 }}
               >
                 <Image
@@ -194,13 +194,13 @@ export function AcademicsShs() {
                   alt="Senior High Guardians at St. Joseph's Academy working within their chosen Academic Track cluster"
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-3 border border-secondary/30"
                   style={{
-                    borderRadius: "45% 55% 48% 52% / 55% 45% 58% 42%",
+                    borderRadius: "40% 44% 42% 40% / 44% 40% 40% 42%",
                   }}
                 />
               </div>
