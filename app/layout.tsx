@@ -24,7 +24,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "St. Joseph's Academy of Malinao | Where Guardians Grow",
+  title: "SJA Malinao",
   description:
     "St. Joseph's Academy of Malinao, Inc. is a private Catholic (Diocesan) school in Malinao, Aklan, Philippines, forming Guardians in faith, knowledge, and virtue since 1947.",
 };
