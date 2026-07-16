@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   LazyMotion,
@@ -128,6 +129,37 @@ export function AcademicsCta() {
               >
                 See admission requirements
               </Link>
+            </m.div>
+
+            {/* Welcome photo: the actual people a family meets on the first
+               visit, the registrar seated with two younger Guardians and the
+               principal standing with two Senior High Guardians. A wide
+               big-rounded banner, NOT the organic blob: this is a two-group
+               scene, not a single-subject hero. The thin gold inset ring is
+               decorative linework only, legal on this Evergreen ground per
+               the Gold-as-Detail Rule. The crop anchors upward
+               (object-[50%_30%]) because all six faces sit in the photo's
+               upper band; a default center crop would push them against the
+               frame edge (the JHS/SHS face-clipping lesson, commit 3a111ba).
+               mt-6 + the container's gap-6 totals 3rem below the buttons,
+               the spec's mt-12 spacing. */}
+            <m.div
+              variants={itemVariants}
+              className="relative mt-6 w-full max-w-[64rem]"
+            >
+              <div className="relative aspect-[3/2] overflow-hidden rounded-[32px] border border-grove-foreground/15 bg-grove-deep sm:aspect-[16/9] sm:rounded-[40px]">
+                <Image
+                  src="/images/academics/admissions-welcome.jpg"
+                  alt="The principal and registrar of St. Joseph's Academy welcoming Guardians, from the registrar's desk to Senior High"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 64rem"
+                  className="object-cover object-[50%_30%]"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-3 rounded-[20px] border border-secondary/30 sm:rounded-[28px]"
+                />
+              </div>
             </m.div>
           </m.div>
         </section>
