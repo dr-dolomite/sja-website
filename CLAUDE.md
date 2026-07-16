@@ -34,6 +34,15 @@ The main session (run on **Opus**) acts as **head architect**: it owns planning,
 - **Escalate to Opus** only for *very* complex tasks — cross-cutting architecture, subtle debugging, intricate motion choreography — by passing `model: "opus"` in the Agent call (the `implementer` definition defaults to Sonnet; the override wins).
 - **Devil's advocate — `devils-advocate` (Opus, read-only)**: before committing to any significant plan, architecture, or design direction, spawn exactly **one** to attack it. Address or consciously reject its objections before proceeding. One per decision — never a panel.
 
+### Parallel work: worktrees, not branch juggling
+
+Never develop two active branches in the same checkout. Branch-switching mid-work and merging long-lived parallel branches is the failure mode this section exists to prevent.
+
+- **One worktree per active branch.** If a feature will coexist with other in-progress work, start it in its own worktree (`git worktree add ../sja-<branch> -b <branch> main`) instead of switching branches in the main checkout, which stays on `main`. The `superpowers:using-git-worktrees` skill handles this setup.
+- **Parallel file-writing subagents get isolated worktrees.** When delegating 2+ implementation tasks concurrently, pass `isolation: "worktree"` in each Agent call so workers never clobber each other's working tree (unchanged worktrees auto-clean). A single sequential task doesn't need it.
+- **Slice tasks to disjoint files.** Worktrees prevent checkout contention, not merge conflicts. When decomposing work, give parallel workers non-overlapping files/directories; tasks that must touch the same file run sequentially in one worktree.
+- **Keep branches short-lived.** Land each branch to `main` promptly: rebase on `main`, merge one branch at a time, then `git worktree remove <path>` and delete the branch. Never stack a new branch on an unmerged one, and don't let finished branches linger unmerged (they rot into conflict debt).
+
 ## UI Workflow
 
 - **Invoke `/impeccable craft` when building new UI parts** (new sections, pages, components, visual features). It reads `PRODUCT.md`/`DESIGN.md` and enforces the design system.
@@ -64,4 +73,4 @@ Next.js 16 (App Router) + React 19 + TypeScript. Routes live under `app/`; share
 - **Fonts**: **Instrument Serif** (display, weight 400 roman+italic, ≥ ~24px floor) drives all headings via `--font-serif`/`--font-heading`, and **Hanken Grotesk** (weights 300–700) is the body/UI workhorse via `--font-sans`. `Geist Mono`/`ui-monospace` remains for spec-sheet-style captions only, not a brand voice. Wired via `next/font` in `app/layout.tsx`, mapped to CSS variables in the `@theme` block of `app/globals.css`.
 - **Path alias**: `@/*` maps to the repo root (see `tsconfig.json` and `components.json` aliases).
 
-Note: this directory is not currently a git repository.
+Git: GitHub remote `origin`, default branch `main`. Feature work happens on short-lived branches in dedicated worktrees (see Orchestration).
