@@ -32,33 +32,17 @@ const itemVariants: Variants = {
   },
 };
 
-// PLACEHOLDER: the three announcements below are brand-voiced drafts
-// standing in for real school announcements (enrollment dates, orientation
-// schedule, recognition rites), pending official content from the school
-// before launch. The section structure itself, a dated editorial row list,
-// is final.
-const NEWS = [
-  {
-    date: "Jul 8, 2026",
-    title: "Enrollment for SY 2026 to 2027 is now open",
-    blurb:
-      "The registrar’s office welcomes new and returning families, Monday to Friday.",
-  },
-  {
-    date: "Jun 26, 2026",
-    title: "Orientation day for new families",
-    blurb:
-      "Meet the faculty, tour the campus, and get your questions answered before classes begin.",
-  },
-  {
-    date: "Jun 12, 2026",
-    title: "Recognition rites and moving-up ceremony",
-    blurb:
-      "Congratulations to our completers and awardees, photos available at the registrar’s office.",
-  },
-] as const;
+// Renders the latest three Guard Line articles, passed down from
+// app/page.tsx (which reads them from @/lib/news). The section structure
+// itself, a dated editorial row list, is final.
+export type HomeNewsPost = {
+  slug: string;
+  displayDate: string;
+  title: string;
+  excerpt: string;
+};
 
-export function News() {
+export function News({ posts }: { posts: HomeNewsPost[] }) {
   return (
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
@@ -104,7 +88,7 @@ export function News() {
               </div>
               <m.a
                 variants={itemVariants}
-                href="#"
+                href="/news"
                 className="w-fit border-b-2 border-secondary pb-0.5 text-[15px] font-semibold text-primary transition-colors hover:text-grove-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
               >
                 All announcements &rarr;
@@ -119,23 +103,23 @@ export function News() {
               viewport={{ once: true, margin: "0px 0px -15% 0px" }}
               className="mt-12 flex flex-col sm:mt-16"
             >
-              {NEWS.map(({ date, title, blurb }, index) => (
-                <m.div key={date} variants={itemVariants}>
+              {posts.map(({ slug, displayDate, title, excerpt }, index) => (
+                <m.div key={slug} variants={itemVariants}>
                   <a
-                    href="#"
+                    href={`/news/${slug}`}
                     className={`group flex flex-col gap-3 rounded-2xl border-t border-border px-3 py-7 transition-colors transition-transform hover:translate-x-1 hover:bg-[#F1F6F1] focus-visible:translate-x-1 focus-visible:bg-[#F1F6F1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 sm:grid sm:grid-cols-[170px_1fr_40px] sm:items-baseline sm:gap-8 ${
-                      index === NEWS.length - 1 ? "border-b border-border" : ""
+                      index === posts.length - 1 ? "border-b border-border" : ""
                     }`}
                   >
                     <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
-                      {date}
+                      {displayDate}
                     </span>
                     <span className="flex flex-col gap-1.5">
                       <span className="font-serif text-2xl leading-tight text-foreground">
                         {title}
                       </span>
                       <span className="max-w-[60ch] text-pretty text-[15px] leading-relaxed text-muted-foreground">
-                        {blurb}
+                        {excerpt}
                       </span>
                     </span>
                     <span

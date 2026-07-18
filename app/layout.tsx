@@ -24,9 +24,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Without metadataBase, og:image URLs emit as relative paths that Facebook's
+  // scraper cannot resolve; FB is the school's primary sharing channel.
+  metadataBase: new URL("https://sjamalinao.edu.ph"),
   title: "SJA Malinao",
   description:
     "St. Joseph's Academy of Malinao, Inc. is a private Catholic (Diocesan) school in Malinao, Aklan, Philippines, forming Guardians in faith, knowledge, and virtue since 1947.",
+  openGraph: {
+    siteName: "St. Joseph's Academy of Malinao",
+    type: "website",
+    locale: "en_PH",
+  },
 };
 
 export default function RootLayout({

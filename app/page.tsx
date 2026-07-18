@@ -7,8 +7,16 @@ import { LifeOfGuardians } from "@/components/home/life-of-guardians";
 import { Offerings } from "@/components/home/offerings";
 import { News } from "@/components/home/news";
 import { Admissions } from "@/components/home/admissions";
+import { getLatestPosts } from "@/lib/news";
 
 export default function Home() {
+  const latestPosts = getLatestPosts(3).map((post) => ({
+    slug: post.slug,
+    displayDate: post.displayDate,
+    title: post.title,
+    excerpt: post.excerpt,
+  }));
+
   return (
     <>
       <a
@@ -24,7 +32,7 @@ export default function Home() {
         <VisionMission />
         <LifeOfGuardians />
         <Offerings />
-        <News />
+        <News posts={latestPosts} />
         <Admissions />
       </main>
       <SiteFooter />
