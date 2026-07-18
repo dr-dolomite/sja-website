@@ -139,7 +139,7 @@ function parsePostFile(filePath: string): ParseResult {
 export function getAllPosts(): NewsPost[] {
   if (!fs.existsSync(CONTENT_DIR)) return [];
   const posts: NewsPost[] = [];
-  for (const file of fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".md"))) {
+  for (const file of fs.readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".md") && f !== "README.md")) {
     const result = parsePostFile(path.join(CONTENT_DIR, file));
     if ("errors" in result) {
       console.warn(

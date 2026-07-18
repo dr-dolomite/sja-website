@@ -34,9 +34,12 @@ Rules the validator enforces (`pnpm validate:content`):
 - 0 to 3 photos; each needs `alt` text; files live in `public/news/<slug>/`.
 - Resize photos to at most 1600px wide and roughly 400KB before committing
   (any photo editor or https://squoosh.app works).
-- House copy: no em dashes, no mid dots, students are "Guardians".
+- No em dashes and no mid dots anywhere in the text.
 - `category` is optional: Announcement, Event, or Achievement read best.
 - Add `draft: true` to keep a post out of the site while working on it.
+
+House style the validator cannot check for you: refer to students as
+"Guardians", and keep the warm, encouraging voice used across the site.
 
 A broken article never takes the site down: the build skips invalid posts with
 a warning. Run `pnpm validate:content` to find out exactly what is wrong.

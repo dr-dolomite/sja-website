@@ -58,6 +58,15 @@ for (const file of files) {
   ) {
     fail(file, `date must be a valid "YYYY-MM-DD" string, got: ${JSON.stringify(data.date)}`);
   }
+  if (data.category !== undefined && typeof data.category !== "string") {
+    fail(file, "category must be a string when present");
+  }
+  const KNOWN_KEYS = ["title", "date", "excerpt", "category", "photos", "draft"];
+  for (const key of Object.keys(data)) {
+    if (!KNOWN_KEYS.includes(key)) {
+      fail(file, `unknown frontmatter field "${key}" (allowed: ${KNOWN_KEYS.join(", ")})`);
+    }
+  }
   if (content.trim() === "") {
     fail(file, "article body is empty");
   }
@@ -88,7 +97,13 @@ for (const file of files) {
       fail(file, `photo file not found in public/: ${src}`);
       continue;
     }
-    const buf = fs.readFileSync(abs);
+    let buf;
+    try {
+      buf = fs.readFileSync(abs);
+    } catch {
+      fail(file, `could not read photo file ${src}`);
+      continue;
+    }
     try {
       const { width } = imageSize(buf);
       if (width > MAX_PHOTO_WIDTH) {
