@@ -75,7 +75,6 @@ export const siteConfig = {
 export const FOOTER_NAV: NavLink[] = [
   { href: "/about", label: "About" },
   { href: "/academics", label: "Academics" },
-  { href: "/guardian-life", label: "Guardian Life" },
   { href: "/news", label: "News" },
   { href: "/admissions", label: "Admissions" },
   { href: "/contact", label: "Contact" },
