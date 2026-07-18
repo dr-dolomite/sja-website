@@ -37,6 +37,8 @@ Rules the validator enforces (`pnpm validate:content`):
 - No em dashes and no mid dots anywhere in the text.
 - `category` is optional: Announcement, Event, or Achievement read best.
 - Add `draft: true` to keep a post out of the site while working on it.
+- Only these frontmatter fields are allowed: title, date, excerpt, category,
+  photos, draft. Anything else (like a typo "photo:") is an error.
 
 House style the validator cannot check for you: refer to students as
 "Guardians", and keep the warm, encouraging voice used across the site.

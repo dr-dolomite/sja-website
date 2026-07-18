@@ -160,7 +160,7 @@ export function GuardLineIndex({ posts }: { posts: GuardLineListPost[] }) {
                       }`}
                     >
                       <span className="text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
-                        {post.displayDate}
+                        <time dateTime={post.date}>{post.displayDate}</time>
                       </span>
                       <span className="flex flex-col gap-1.5">
                         <span className="font-serif text-2xl leading-tight text-foreground">

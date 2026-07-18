@@ -12,24 +12,29 @@ import type { NewsPost } from "@/lib/news";
 // react-markdown passes an extra `node` prop to custom components; it must be
 // destructured out so it never spreads onto the DOM element.
 const markdownComponents: Components = {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   p: ({ node, ...props }) => (
     <p
       className="text-[16px] leading-[1.7] text-foreground/90 sm:text-[17px]"
       {...props}
     />
   ),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   a: ({ node, ...props }) => (
     <a
       className="font-semibold text-primary underline decoration-secondary/70 underline-offset-4 transition-colors hover:text-grove-deep"
       {...props}
     />
   ),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ul: ({ node, ...props }) => (
     <ul className="flex list-disc flex-col gap-2 pl-5 text-[16px] leading-[1.7] text-foreground/90 sm:text-[17px]" {...props} />
   ),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ol: ({ node, ...props }) => (
     <ol className="flex list-decimal flex-col gap-2 pl-5 text-[16px] leading-[1.7] text-foreground/90 sm:text-[17px]" {...props} />
   ),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   blockquote: ({ node, ...props }) => (
     <blockquote
       className="border-l-2 border-secondary pl-5 font-serif text-2xl leading-snug text-grove-deep"
