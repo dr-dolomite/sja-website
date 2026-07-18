@@ -31,17 +31,32 @@ export async function generateMetadata({
       description: post.excerpt,
       type: "article",
       publishedTime: post.date,
+      siteName: "St. Joseph's Academy of Malinao",
+      locale: "en_PH",
       // Resolved against metadataBase to an absolute URL for FB's scraper.
-      images: post.photos[0]
-        ? [
-            {
-              url: post.photos[0].src,
-              width: post.photos[0].width,
-              height: post.photos[0].height,
-              alt: post.photos[0].alt,
-            },
-          ]
-        : [{ url: "/sja-school-logo.png" }],
+      // Conditionally include images: per-article photo if available,
+      // otherwise fall back to the branded OG card at /opengraph-image.
+      ...(post.photos[0]
+        ? {
+            images: [
+              {
+                url: post.photos[0].src,
+                width: post.photos[0].width,
+                height: post.photos[0].height,
+                alt: post.photos[0].alt,
+              },
+            ],
+          }
+        : {
+            images: [
+              {
+                url: "/opengraph-image",
+                width: 1200,
+                height: 630,
+                alt: "St. Joseph's Academy of Malinao, Inc.",
+              },
+            ],
+          }),
     },
   };
 }
