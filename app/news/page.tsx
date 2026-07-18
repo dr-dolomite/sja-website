@@ -14,10 +14,10 @@ export default function NewsPage() {
   // Client component gets a plain serializable shape, never the full post.
   const posts = getAllPosts().map((post) => ({
     slug: post.slug,
+    date: post.date,
     title: post.title,
     displayDate: post.displayDate,
     excerpt: post.excerpt,
-    category: post.category,
     photo: post.photos[0],
   }));
 

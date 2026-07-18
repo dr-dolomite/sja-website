@@ -34,10 +34,10 @@ const itemVariants: Variants = {
 
 export type GuardLineListPost = {
   slug: string;
+  date: string;
   title: string;
   displayDate: string;
   excerpt: string;
-  category?: string;
   photo?: { src: string; alt: string; width: number; height: number };
 };
 
@@ -99,16 +99,17 @@ export function GuardLineIndex({ posts }: { posts: GuardLineListPost[] }) {
                 <m.div variants={itemVariants}>
                   <Link
                     href={`/news/${featured.slug}`}
-                    className="group grid overflow-hidden rounded-[32px] bg-muted transition-shadow hover:shadow-[0_24px_48px_-24px_rgba(14,61,43,0.28)] focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/60 md:grid-cols-2"
+                    className={`group grid overflow-hidden rounded-[32px] bg-muted transition-shadow hover:shadow-[0_24px_48px_-24px_rgba(14,61,43,0.28)] focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/60${featured.photo ? " md:grid-cols-2" : ""}`}
                   >
                     <div className="flex flex-col justify-center gap-4 px-6 py-8 sm:px-10 sm:py-12">
-                      <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-primary">
+                      <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
                         <span>Latest</span>
+                        <span className="sr-only">, </span>
                         <span
                           aria-hidden="true"
                           className="mx-3 inline-block h-px w-6 -translate-y-0.5 bg-secondary"
                         />
-                        <time>{featured.displayDate}</time>
+                        <time dateTime={featured.date}>{featured.displayDate}</time>
                       </p>
                       <h2 className="text-balance font-serif text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.1] text-grove-deep">
                         {featured.title}
