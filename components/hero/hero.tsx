@@ -257,7 +257,7 @@ export function Hero() {
                    rather than SaaS-neon, and deepens as it lifts on hover. The
                    base's focus-visible ring is inherited unchanged. */}
                 <Button
-                  render={<Link href="/admissions" />}
+                  render={<Link href="/#admissions" />}
                   nativeButton={false}
                   className="h-13 rounded-full bg-primary bg-clip-border px-8 text-base font-semibold text-primary-foreground shadow-[0_10px_28px_-10px_rgba(14,61,43,0.20)] transition-[transform,box-shadow,background-color] duration-300 ease-(--ease-grove) hover:-translate-y-0.5 hover:bg-[color-mix(in_oklch,var(--primary),#000_10%)] hover:shadow-[0_18px_40px_-12px_rgba(14,61,43,0.28)]"
                 >
