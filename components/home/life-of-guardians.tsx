@@ -99,9 +99,18 @@ export function LifeOfGuardians() {
               variants={itemVariants}
               className="max-w-[52ch] text-pretty text-lg leading-relaxed text-muted-foreground"
             >
-              A Guardian grows in four dimensions: academic, spiritual,
-              communitarian, and humanitarian. This is what that looks like in
-              an ordinary week at St. Joseph&rsquo;s.
+              A Guardian grows in four dimensions,{" "}
+              <span className="font-semibold text-foreground">academic</span>,{" "}
+              <span className="font-semibold text-foreground">spiritual</span>,{" "}
+              <span className="font-semibold text-foreground">
+                communitarian
+              </span>
+              , and{" "}
+              <span className="font-semibold text-foreground">
+                humanitarian
+              </span>
+              . Here is what that whole-person formation looks like at St.
+              Joseph&rsquo;s.
             </m.p>
           </m.div>
 
