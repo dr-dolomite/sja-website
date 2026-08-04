@@ -116,9 +116,26 @@ export function SiteFooter() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`${siteConfig.shortName} on ${social.label}`}
-                        className="flex size-10 items-center justify-center rounded-full bg-grove-foreground/10 text-grove-foreground transition-colors hover:bg-grove-foreground/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grove-foreground/70"
+                        className={cn(
+                          "flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grove-foreground/70",
+                          social.logo
+                            ? "bg-white/95 hover:bg-white"
+                            : "bg-grove-foreground/10 text-grove-foreground hover:bg-grove-foreground/20"
+                        )}
                       >
-                        {Glyph ? <Glyph className="size-5" /> : social.label}
+                        {social.logo ? (
+                          <Image
+                            src={social.logo.src}
+                            alt=""
+                            width={social.logo.width}
+                            height={social.logo.height}
+                            className="size-full object-cover"
+                          />
+                        ) : Glyph ? (
+                          <Glyph className="size-5" />
+                        ) : (
+                          social.label
+                        )}
                       </a>
                     );
                   })}

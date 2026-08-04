@@ -7,7 +7,15 @@
 // general@ for everyday questions, registrar@ for admissions inquiries.
 
 export type NavLink = { href: string; label: string };
-export type SocialLink = { key: string; label: string; href: string };
+export type SocialLink = {
+  key: string;
+  label: string;
+  href: string;
+  // Present only for orgs with their own distinct mark (SSLG, the
+  // publication). Omitted for the school's own Facebook, which uses the
+  // generic glyph rather than a cropped profile photo.
+  logo?: { src: string; width: number; height: number };
+};
 export type OfficeHours = {
   days: string;
   periods: { label: string; hours: string }[];
@@ -66,6 +74,28 @@ export const siteConfig = {
       key: "facebook",
       label: "Facebook",
       href: "https://www.facebook.com/SJAOfficialPage",
+    },
+    // Student-org pages, not the school's own account, so each gets a label
+    // that names the org rather than reusing the bare "Facebook" label above.
+    {
+      key: "sslg",
+      label: "SSLG (Facebook)",
+      href: "https://www.facebook.com/SjaGuardiansSSG",
+      logo: {
+        src: "/images/social/sslg-shield-logo.png",
+        width: 960,
+        height: 960,
+      },
+    },
+    {
+      key: "silhouette",
+      label: "The Silhouette Publication (Facebook)",
+      href: "https://www.facebook.com/profile.php?id=100092853381109",
+      logo: {
+        src: "/images/social/silhouette-publication-logo.png",
+        width: 2000,
+        height: 2000,
+      },
     },
   ] satisfies SocialLink[],
 } as const;

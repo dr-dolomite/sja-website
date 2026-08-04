@@ -9,12 +9,8 @@ import { Award } from "lucide-react";
 // flashing blank white on a cold load.
 import atiAtihanImg from "../../public/images/hero/sja-ati-atihan.jpg";
 import faithMassImg from "../../public/images/sja-images/IMG_20260610_091810.jpg";
-import guardiansImg from "../../public/images/hero/sja-new.jpg";
-// PLACEHOLDER: temporary stand-in for the Humanitarian pillar until a real
-// outreach / community-visit photo is provided. Swap this import for the real
-// asset before launch. (Uses the graduation photo, not the church panorama,
-// so it does not duplicate the Spiritual circle above.)
-import outreachPlaceholderImg from "../../public/images/hero/sja-graduation.png";
+import guardiansImg from "../../public/images/hero/sja-graduation.png";
+import outreachImg from "../../public/images/outreach-program/671736708_911888454993589_1057223102472253959_n.jpg";
 import {
   LazyMotion,
   MotionConfig,
@@ -136,8 +132,8 @@ export function LifeOfGuardians() {
               >
                 From Grade 7 to Grade 12, Guardians follow the MATATAG and
                 Strengthened Senior High curriculum, choosing the STEM, ASSH,
-                or BE track that fits where they are headed, in classes small
-                enough that a teacher still learns every name.
+                or BE track that fits where they are headed, guided by
+                teachers who know them by name.
               </m.p>
               {/* The section's single gold detail: ONE Piña Gold Award icon
                  paired with one strong line, not a bulleted list, so gold
@@ -153,8 +149,9 @@ export function LifeOfGuardians() {
                   className="size-5 shrink-0 text-secondary"
                 />
                 <p className="text-base font-semibold text-foreground sm:text-lg">
-                  Ten Guardians are named Top 10 Outstanding Students every
-                  year, chosen by interview, not by grades alone.
+                  Guardians are honored each year for Academic Excellence, and
+                  a separate Top 10 Outstanding Students award recognizes
+                  contributions across the four pillars of formation.
                 </p>
               </m.div>
             </div>
@@ -164,7 +161,7 @@ export function LifeOfGuardians() {
             >
               <Image
                 src={guardiansImg}
-                alt="Four Guardians in the St. Joseph's Academy uniform, from junior high to senior high"
+                alt="St. Joseph's Academy Guardians at their graduation with faculty and clergy"
                 fill
                 sizes="(min-width: 1024px) 42vw, 92vw"
                 quality={72}
@@ -269,9 +266,9 @@ export function LifeOfGuardians() {
                 sizes="100vw"
                 quality={72}
                 placeholder="blur"
-                // Anchor the crop toward the top of the frame so the upper
-                // portion of the festival face is no longer clipped.
-                className="object-cover object-[center_22%]"
+                // Anchor the crop lower in the frame so the bottom half of
+                // the festival face (not empty space above it) fills the band.
+                className="object-cover object-[center_45%]"
               />
             </m.div>
             {/* Two scrims, bottom-anchored to INK rather than a full grove-deep
@@ -327,29 +324,25 @@ export function LifeOfGuardians() {
                   variants={itemVariants}
                   className="max-w-[55ch] text-pretty text-base leading-relaxed text-grove-foreground/90 sm:text-lg"
                 >
-                  Guardians grow up inside the life of Malinao: the town
-                  Daigon, the Ati-Atihan, Foundation Day, and the CEAP
-                  Inter-Catholic League. It is where they carry the
-                  school&rsquo;s name out into the world.
+                  Guardians grow up inside the life of Malinao. Year after
+                  year they take part in the celebrations that shape the town,
+                  from the Daigon of Pascua sa Malinao to the Ati-Atihan and
+                  the school&rsquo;s own Foundation Day.
                 </m.p>
                 <m.p
                   variants={itemVariants}
                   className="max-w-[55ch] text-pretty text-base leading-relaxed text-grove-foreground/90 sm:text-lg"
                 >
-                  Five straight years as LGU Daigon choir champion. Honors in
-                  the CEAP Inter-Catholic League, in sports and the cultural
-                  competitions. A Guardian who reached the Palarong Pambansa,
-                  and December&rsquo;s Battle of the Bands title.
+                  They carry the school&rsquo;s name beyond the campus too, in
+                  choral, cultural, and athletic competitions across the
+                  parish, the town, and the province, and they come home with
+                  titles more often than not.
                 </m.p>
               </div>
             </m.div>
           </div>
 
           {/* 5. Humanitarian — Coconut two-column row ----------------------- */}
-          {/* PLACEHOLDER IMAGE: the photo below is a temporary stand-in
-             (whole-school shot). Swap outreachPlaceholderImg for a real
-             outreach/community-visit photo before launch. Tracked with the
-             footer/core-values placeholders. */}
           <m.div
             variants={containerVariants}
             initial="hidden"
@@ -388,8 +381,8 @@ export function LifeOfGuardians() {
               className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl lg:order-1"
             >
               <Image
-                src={outreachPlaceholderImg}
-                alt="Placeholder: St. Joseph's Academy Guardians at their graduation with faculty and clergy"
+                src={outreachImg}
+                alt="St. Joseph's Academy Guardians distributing school supplies to children during a community outreach visit"
                 fill
                 sizes="(min-width: 1024px) 42vw, 92vw"
                 quality={72}
