@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored design reference template (gitignored, never built or shipped).
+    // Its legacy React is not ours to fix and its lint errors were masking the
+    // real app's clean result.
+    "St. Joseph's Academy Homepage/**",
   ]),
 ]);
 

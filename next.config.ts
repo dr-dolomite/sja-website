@@ -17,10 +17,11 @@ const csp = [
 ].join("; ");
 
 // NOTE: If @vercel/analytics or Speed Insights is added later, connect-src must
-// include its beacon origin (e.g. https://*.vercel-insights.com). Once the CSP
-// is verified clean in the browser (no console violations), flip the header key
-// below from Content-Security-Policy-Report-Only to Content-Security-Policy to
-// enforce it.
+// include its beacon origin (e.g. https://*.vercel-insights.com) or the beacon
+// will be BLOCKED, not merely reported: this policy is enforcing as of launch.
+// It ran as Content-Security-Policy-Report-Only through development; if a new
+// third-party embed ever breaks, widen the directive above rather than
+// downgrading the header back to report-only.
 const nextConfig: NextConfig = {
   images: {
     // The hero/story photography is served at quality 72 (deliberately a touch
@@ -33,7 +34,7 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
-          { key: "Content-Security-Policy-Report-Only", value: csp },
+          { key: "Content-Security-Policy", value: csp },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           {

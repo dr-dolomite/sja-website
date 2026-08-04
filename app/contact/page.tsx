@@ -3,7 +3,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Contact } from "@/components/contact/contact";
 
 export const metadata = {
-  title: "Contact | St. Joseph's Academy of Malinao, Inc.",
+  title: "Contact",
   description:
     "Visit St. Joseph's Academy of Malinao, Aklan, or get in touch with the registrar's office.",
 };

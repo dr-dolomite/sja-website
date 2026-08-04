@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!post) return {};
 
   return {
-    title: `${post.title} | St. Joseph's Academy of Malinao`,
+    title: post.title,
     description: post.excerpt,
     openGraph: {
       title: post.title,

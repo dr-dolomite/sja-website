@@ -27,7 +27,14 @@ export const metadata: Metadata = {
   // Without metadataBase, og:image URLs emit as relative paths that Facebook's
   // scraper cannot resolve; FB is the school's primary sharing channel.
   metadataBase: new URL("https://sjamalinao.edu.ph"),
-  title: "SJA Malinao",
+  // Short tab label, but every page stays distinct in browser tabs and search
+  // results: child pages set only their own segment ("Academics") and the
+  // template appends the school. The home page uses `default` verbatim, with
+  // no trailing separator.
+  title: {
+    default: "SJA Malinao",
+    template: "%s | SJA Malinao",
+  },
   description:
     "St. Joseph's Academy of Malinao, Inc. is a private Catholic (Diocesan) school in Malinao, Aklan, Philippines, forming Guardians in faith, knowledge, and virtue since 1947.",
   openGraph: {

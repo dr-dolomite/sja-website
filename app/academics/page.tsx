@@ -8,7 +8,7 @@ import { AcademicsFormation } from "@/components/academics/academics-formation";
 import { AcademicsCta } from "@/components/academics/academics-cta";
 
 export const metadata: Metadata = {
-  title: "Academics | St. Joseph's Academy of Malinao",
+  title: "Academics",
   description:
     "St. Joseph's Academy's K to 12 program: Junior High on the MATATAG curriculum and the Strengthened Senior High School with STEM, ASSH, and BE clusters, enriched by Josephian formation.",
 };

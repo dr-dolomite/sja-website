@@ -5,7 +5,7 @@ import { GuardLineIndex } from "@/components/news/guard-line-index";
 import { getAllPosts } from "@/lib/news";
 
 export const metadata: Metadata = {
-  title: "News | St. Joseph's Academy of Malinao",
+  title: "News",
   description:
     "The Guard Line: news and announcements from St. Joseph's Academy of Malinao. Enrollment updates, school events, and Guardian achievements.",
 };
