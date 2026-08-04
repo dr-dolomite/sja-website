@@ -194,10 +194,12 @@ export function Admissions() {
 
                 {/* CTA row. The single gold pill CTA this view is allowed on an
                    evergreen ground (evergreen text on gold = 5.97:1), paired
-                   with a quieter light text link. Both follow the site's
-                   committed route convention (header and footer link the same
-                   paths); /admissions is where the full, conditional
-                   requirements matrix will live per DESIGN.md Section 7. */}
+                   with a quieter light text link. Both route to /contact for
+                   now: the interior /admissions page with the full,
+                   conditional requirements matrix (DESIGN.md Section 7)
+                   hasn't been built yet, so this section's own requirements
+                   card is the fullest detail available on the site. Repoint
+                   this link once that page ships. */}
                 <m.div
                   variants={itemVariants}
                   className="mt-10 flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:gap-7"
@@ -210,7 +212,7 @@ export function Admissions() {
                     Inquire Now
                   </Button>
                   <Link
-                    href="/admissions"
+                    href="/contact"
                     className="text-[15px] font-semibold text-grove-foreground underline decoration-secondary/70 decoration-[1.5px] underline-offset-[6px] transition-colors hover:decoration-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-grove-foreground/70 focus-visible:ring-offset-2 focus-visible:ring-offset-grove-deep"
                   >
                     See full admission details
